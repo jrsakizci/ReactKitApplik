@@ -1,0 +1,73 @@
+import React, { Component } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
+import Home from './Home'
+import Register from './auth/Register'
+import '../stylesheets/main.less'
+
+export default class Routes extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      "showHideMenu": "hide",
+    };
+  }
+ 
+  render() {
+    return (
+      <div id="element">
+        <div id="sidebar">
+          <div className="fl left-side">
+            <div id="logo">
+              <img Link to="/" src="http://4.bp.blogspot.com/-WbHYU-bG5ho/VNP2k-lVjBI/AAAAAAAABWA/zBCShgPtYMQ/s1600/new-logo.png" alt="" />
+            </div>
+          </div>
+          <div className="fr right-side">
+            <div id="login-top">
+              Giriş Yap / Üye Ol
+          </div>
+
+          </div>
+          <div id="menu">
+            <ul>
+              <li><a><i className="fa fa-home header-icon" aria-hidden="true"></i> Anasayfa</a></li>
+              <li><a href="#"><i className="fa fa-book header-icon" aria-hidden="true"></i> Kategoriler</a></li>
+              <li><a href="#"><i className="fa fa-search header-icon" aria-hidden="true"></i> Arama</a></li>
+            </ul>
+          </div>
+          <div id="mobile-menu" onClick={this.toggleMobileMenu.bind(this)}>
+            MENU
+        </div>
+        <div id="mobile-toggle-menu"  className={this.state.showHideMenu ? "hide" :"show"}>
+          <ul>
+            <li><i className="fa fa-home header-icon fl" aria-hidden="true"></i> <a className="fr">Anasayfa</a></li>
+            <div className="cf"></div>
+            <li><i className="fa fa-book header-icon fl" aria-hidden="true"></i><a href="#" className="fr"> Kategoriler</a></li>
+            <div className="cf"></div>
+            <li><i className="fa fa-search header-icon fl" aria-hidden="true"></i><a href="#" className="fr"> Arama</a></li>
+            <div className="cf"></div>
+            <li><i className="fa fa-plus header-icon fl" aria-hidden="true"></i><a href="#" className="fr"> Kitap Ekle</a></li>
+            <div className="cf"></div>
+          </ul>
+        </div>
+
+        </div>
+        <div className="cf"></div>
+        <div id="content">
+          <Router>
+            <div className="container">
+              <Route exact path='/' component={Home} />
+              <Route path='/register' component={Register} />
+            </div>
+          </Router>
+        </div>
+      </div>
+    );
+  }
+  toggleMobileMenu() {
+    this.setState( { showHideMenu : !this.state.showHideMenu } );
+  }
+}

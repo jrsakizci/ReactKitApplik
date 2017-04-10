@@ -1,0 +1,11 @@
+@import "./login.less";
+
+#register {
+   &:extend(#login);
+    input {
+        &:extend(#login input);
+    }
+    .register-sbmt {
+       &:extend(#login .login-sbmt);
+    }
+}

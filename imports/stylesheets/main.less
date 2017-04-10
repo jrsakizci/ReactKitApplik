@@ -1,0 +1,212 @@
+/**
+ * Global Reset of all HTML Elements
+ *
+ * Resetting all of our HTML Elements ensures a smoother
+ * visual transition between browsers. If you don't believe me,
+ * try temporarily commenting out this block of code, then go
+ * and look at Mozilla versus Safari, both good browsers with
+ * a good implementation of CSS. The thing is, all browser CSS
+ * defaults are different and at the end of the day if visual
+ * consistency is what we're shooting for, then we need to
+ * make sure we're resetting all spacing elements.
+ *
+ */
+html, body {
+  border: 0;
+  font-family: "Helvetica-Neue", "Helvetica", Arial, sans-serif;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+
+div, span, object, iframe, img, table, caption, thead, tbody,
+tfoot, tr, tr, td, article, aside, canvas, details, figure, hgroup, menu,
+nav, footer, header, section, summary, mark, audio, video {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, address, cit, code,
+del, dfn, em, ins, q, samp, small, strong, sub, sup, b, i, hr, dl, dt, dd,
+ol, ul, li, fieldset, legend, label {
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+}
+
+article, aside, canvas, figure, figure img, figcaption, hgroup,
+footer, header, nav, section, audio, video {
+  display: block;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  caption, th, td {
+    text-align: left;
+    vertical-align: middle;
+  }
+}
+
+a img {
+  border: 0;
+}
+
+:focus {
+  outline: 0;
+}
+
+/* You can add global styles to this file, and also import other style files */
+@basebg: #232323;
+@secondbg: #383838;
+
+html {
+  height:100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width:100%;
+}
+body {
+  height:100%;
+  width:100%;
+}
+.fl {
+  float:left;
+}
+.fr {
+  float:right;
+}
+.cf {
+  content:'';
+  display:table;
+  clear:both;
+}
+.show{
+  max-height:150px !important;
+}
+.hide{
+  max-height:0px !important;
+}
+
+@w100:100%;
+@h100:100px;
+
+#sidebar {
+  background-color: @basebg;
+  width:@w100;
+  height:@h100;
+  color:#fff;
+  position: relative;
+}
+#content {
+  padding:20px;
+}
+#logo {
+  height:@h100;
+  text-align:center;
+  line-height:@h100;
+  color:#fff;
+  font-size:14px;
+}
+#logo img {
+  width: 50px;
+  height:@h100;
+}
+.left-side {
+  width:25%;
+}
+.right-side {
+  width:75%;
+  color:#fff;
+}
+#login-top {
+  width:100%;
+  background: @secondbg;
+  line-height:40px;
+  height:40px;
+  text-align:center;
+}
+#login-top:hover {
+  cursor:pointer;
+  background:#676767;
+}
+#menu {
+  display:none;
+  overflow-x:auto;
+  overflow-y:hidden;
+  height:60px;
+  line-height:60px;
+  padding: 0px 15px 0px 0px;
+  @media (min-width:1024px) {
+    display:block;
+  }
+  .header-icon {
+    color:#000;
+    background:#fff !important;
+    border-radius:100%;
+    padding:5px;
+  }
+}
+#menu ul {
+  list-style:none;
+}
+#menu ul li {
+  display:inline-block;
+  width:20%;
+  transition:1s all ease;
+  text-align:center;
+  cursor:pointer;
+  &:nth-child(1):hover {
+    background:#9c3551;
+  }
+  &:nth-child(2):hover {
+    background:#000;
+  }
+  &:nth-child(3):hover {
+    background:#c50000;
+  }
+}
+#menu ul li a {
+  text-decoration:none;
+  color:#fff;
+}
+
+#mobile-menu {
+  text-align:center;
+  line-height:60px;
+  cursor:pointer;
+  @media (min-width:1024px) {
+    display:none;
+  }
+}
+#mobile-toggle-menu {
+  overflow:hidden;
+  -webkit-transition: max-height 1s; 
+  -moz-transition: max-height 1s; 
+  -ms-transition: max-height 1s; 
+  -o-transition: max-height 1s; 
+  transition: max-height 1s;
+  max-height:0px;
+  width: @w100;
+  background:@secondbg;
+  ul {
+    list-style:none;
+    li {
+      text-align:center;
+      height: 40px;
+      width: 60%;
+      margin: 0 auto;
+      a {
+        color:#fff;
+        text-decoration:none;
+      }
+      .header-icon {
+        &:extend(#menu .header-icon);
+      }
+    }
+  }
+}
