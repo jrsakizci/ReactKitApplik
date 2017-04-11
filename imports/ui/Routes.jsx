@@ -3,17 +3,20 @@ import {
   BrowserRouter as Router,
   Route,
   Link
-} from 'react-router-dom'
-import Home from './Home'
-import Register from './auth/Register'
-import '../stylesheets/main.less'
+} from 'react-router-dom';
+import Home from './Home';
+import Register from './auth/Register';
+import '../stylesheets/main.less';
 
 export default class Routes extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      "showHideMenu": "hide",
+      showHideMenu: 'hide',
     };
+  }
+  toggleMobileMenu() {
+    this.setState({ showHideMenu: !this.state.showHideMenu });
   }
  
   render() {
@@ -33,15 +36,15 @@ export default class Routes extends Component {
           </div>
           <div id="menu">
             <ul>
-              <li><a><i className="fa fa-home header-icon" aria-hidden="true"></i> Anasayfa</a></li>
-              <li><a href="#"><i className="fa fa-book header-icon" aria-hidden="true"></i> Kategoriler</a></li>
-              <li><a href="#"><i className="fa fa-search header-icon" aria-hidden="true"></i> Arama</a></li>
+              <li><a><i className="fa fa-home header-icon" aria-hidden="true" /> Anasayfa</a></li>
+              <li><a href="#"><i className="fa fa-book header-icon" aria-hidden="true" /> Kategoriler</a></li>
+              <li><a href="#"><i className="fa fa-search header-icon" aria-hidden="true" />Arama</a></li>
             </ul>
           </div>
           <div id="mobile-menu" onClick={this.toggleMobileMenu.bind(this)}>
             MENU
         </div>
-        <div id="mobile-toggle-menu"  className={this.state.showHideMenu ? "hide" :"show"}>
+        <div id="mobile-toggle-menu" className={this.state.showHideMenu ? 'hide' : 'show'}>
           <ul>
             <li><i className="fa fa-home header-icon fl" aria-hidden="true"></i> <a className="fr">Anasayfa</a></li>
             <div className="cf"></div>
@@ -66,8 +69,5 @@ export default class Routes extends Component {
         </div>
       </div>
     );
-  }
-  toggleMobileMenu() {
-    this.setState( { showHideMenu : !this.state.showHideMenu } );
   }
 }

@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.20.0",
+    "bcrypt": "^1.0.2",
     "classnames": "^2.2.5",
     "meteor-node-stubs": "~0.2.4",
     "react": "^15.4.2",
@@ -14,5 +15,8 @@
     "react-router-dom": "^4.0.0",
     "react-validation": "^2.10.9",
     "webpack": "^2.3.3"
+  },
+  "devDependencies": {
+    "eslint-config-rallycoding": "^3.2.0"
   }
 }
