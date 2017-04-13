@@ -39,15 +39,15 @@ export default class Routes extends Component {
               <li>
                 <a>
                   <i className="fa fa-home header-icon" aria-hidden="true" /> Anasayfa</a>
-                </li>
+              </li>
               <li>
                 <a href="#">
                   <i className="fa fa-book header-icon" aria-hidden="true" /> Kategoriler</a>
-                </li>
+              </li>
               <li>
                 <a href="#">
                   <i className="fa fa-search header-icon" aria-hidden="true" />Arama</a>
-                  </li>
+              </li>
             </ul>
           </div>
           <div id="mobile-menu" onClick={this.toggleMobileMenu.bind(this)}>
@@ -79,7 +79,7 @@ export default class Routes extends Component {
         </div>
 
         </div>
-        <div className="cf"></div>
+        <div className="cf" />
         <div id="content">
           <Router>
             <div className="container">

@@ -37,13 +37,11 @@ export default class Register extends Component {
                 this.state.password, 
                 (error) => {
                 if (error) {
-                    console.log(error);
-                }
-                else {
-                    console.log('aaaa');
+                    console.log(error.reason);
+                } else {
+                    console.log('Başarıyla kaydoldunuz');
                 }
             });
-        console.log(`${this.state.email} ${this.state.password}`);
     }
     render() {
         return (
