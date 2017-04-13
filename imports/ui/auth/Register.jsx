@@ -6,7 +6,7 @@ import { Meteor } from 'meteor/meteor';
 export default class Register extends Component {
     constructor(props) {
         super(props);
-          this.state = {
+        this.state = {
             username: 'kullanıcı adı',
             email: 'email',
             password: 'şifre'
@@ -31,27 +31,51 @@ export default class Register extends Component {
     }
     submit(event) {
         event.preventDefault();
-        Meteor.call('newUser', this.state.username, this.state.email, this.state.password, function (err, resp) {
-            if (err) {
-                console.log(err);
-            }
-            else {
-                console.log(resp);
+            Meteor.call('newUser', 
+                this.state.username, 
+                this.state.email, 
+                this.state.password, 
+                (error) => {
+                if (error) {
+                    console.log(error);
                 }
-        });
+                else {
+                    console.log('aaaa');
+                }
+            });
         console.log(`${this.state.email} ${this.state.password}`);
     }
     render() {
         return (
             <div id="login">
                 <form onSubmit={this.submit}>
-                    <input type="text" placeholder={this.placeholder.username} id="username" name="username" required onChange={this.handleInputChange} />
-                    <input type="email" placeholder={this.placeholder.email} id="email" name="email" required onChange={this.handleInputChange} />
-                    <input type="password" placeholder={this.placeholder.password} id="password" name="password" required onChange={this.handleInputChange} />
+                    <input
+                        type="text"
+                        placeholder={this.placeholder.username}
+                        id="username"
+                        name="username"
+                        required
+                        onChange={this.handleInputChange}
+                    />
+                    <input
+                        type="email"
+                        placeholder={this.placeholder.email}
+                        id="email"
+                        name="email"
+                        required
+                        onChange={this.handleInputChange}
+                    />
+                    <input
+                        type="password"
+                        placeholder={this.placeholder.password}
+                        id="password"
+                        name="password"
+                        required
+                        onChange={this.handleInputChange}
+                    />
                     <input type="submit" className="login-sbmt" value="Hesap Oluştur" />
                 </form>
             </div>
         );
     }
-    
 }

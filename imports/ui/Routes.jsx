@@ -36,9 +36,18 @@ export default class Routes extends Component {
           </div>
           <div id="menu">
             <ul>
-              <li><a><i className="fa fa-home header-icon" aria-hidden="true" /> Anasayfa</a></li>
-              <li><a href="#"><i className="fa fa-book header-icon" aria-hidden="true" /> Kategoriler</a></li>
-              <li><a href="#"><i className="fa fa-search header-icon" aria-hidden="true" />Arama</a></li>
+              <li>
+                <a>
+                  <i className="fa fa-home header-icon" aria-hidden="true" /> Anasayfa</a>
+                </li>
+              <li>
+                <a href="#">
+                  <i className="fa fa-book header-icon" aria-hidden="true" /> Kategoriler</a>
+                </li>
+              <li>
+                <a href="#">
+                  <i className="fa fa-search header-icon" aria-hidden="true" />Arama</a>
+                  </li>
             </ul>
           </div>
           <div id="mobile-menu" onClick={this.toggleMobileMenu.bind(this)}>
@@ -46,14 +55,26 @@ export default class Routes extends Component {
         </div>
         <div id="mobile-toggle-menu" className={this.state.showHideMenu ? 'hide' : 'show'}>
           <ul>
-            <li><i className="fa fa-home header-icon fl" aria-hidden="true"></i> <a className="fr">Anasayfa</a></li>
-            <div className="cf"></div>
-            <li><i className="fa fa-book header-icon fl" aria-hidden="true"></i><a href="#" className="fr"> Kategoriler</a></li>
-            <div className="cf"></div>
-            <li><i className="fa fa-search header-icon fl" aria-hidden="true"></i><a href="#" className="fr"> Arama</a></li>
-            <div className="cf"></div>
-            <li><i className="fa fa-plus header-icon fl" aria-hidden="true"></i><a href="#" className="fr"> Kitap Ekle</a></li>
-            <div className="cf"></div>
+            <li>
+              <i className="fa fa-home header-icon fl" aria-hidden="true" />
+              <a className="fr">Anasayfa</a>
+            </li>
+            <div className="cf" />
+            <li>
+              <i className="fa fa-book header-icon fl" aria-hidden="true" />
+              <a href="#" className="fr"> Kategoriler</a>
+              </li>
+            <div className="cf" />
+            <li>
+              <i className="fa fa-search header-icon fl" aria-hidden="true" />
+              <a href="#" className="fr"> Arama</a>
+              </li>
+            <div className="cf" />
+            <li>
+              <i className="fa fa-plus header-icon fl" aria-hidden="true" />
+              <a href="#" className="fr"> Kitap Ekle</a>
+            </li>
+            <div className="cf" />
           </ul>
         </div>
 

@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { render } from 'react-dom';
-import { Router, Route, Link, IndexRoute, browserHistory  } from 'react-router-dom'
+import { Router, Route, Link, IndexRoute, browserHistory  } from 'react-router-dom';
 
 
 import Routes from '../imports/ui/Routes.jsx';
