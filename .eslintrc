@@ -1,3 +1,11 @@
 {
-    "extends": "rallycoding"
+  "extends" : "rallycoding",
+  "env": {
+    "browser": "true",
+  },
+  "rules": {
+    "max-len": "off",
+    "no-useless-escape": "off",
+    "react/no-multi-comp": "off"
+    }
 }

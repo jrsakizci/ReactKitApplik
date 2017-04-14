@@ -18,7 +18,6 @@ export default class Routes extends Component {
   toggleMobileMenu() {
     this.setState({ showHideMenu: !this.state.showHideMenu });
   }
- 
   render() {
     return (
       <div id="element">

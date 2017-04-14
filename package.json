@@ -11,10 +11,14 @@
     "meteor-node-stubs": "~0.2.4",
     "prop-types": "^15.5.8",
     "react": "^15.4.2",
+    "react-addons-css-transition-group": "^15.5.2",
     "react-dom": "^15.4.2",
+    "react-notification-system": "^0.2.13",
     "react-router": "^4.0.0",
     "react-router-dom": "^4.0.0",
+    "react-transition-group": "^1.1.1",
     "react-validation": "^2.10.9",
+    "timeout-transition-group": "^2.1.0",
     "webpack": "^2.3.3"
   },
   "devDependencies": {
