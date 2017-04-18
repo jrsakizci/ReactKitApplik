@@ -8,6 +8,7 @@ import Home from './Home';
 import Register from './auth/Register';
 import '../stylesheets/main.less';
 
+
 export default class Routes extends Component {
   constructor(props) {
     super(props);

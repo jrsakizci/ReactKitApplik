@@ -49,12 +49,12 @@ export default class Register extends Component {
                 if (error) {
                     this.setState({
                         type: 'error',
-                        message: 'you are  out'
+                        message: 'Bu kayıt daha önceden açılmış.'
                     });
                 } else {
                     this.setState({
                         type: 'success',
-                        message: 'you are in'
+                        message: 'Başarıyla kaydoldunuz!'
                     });
                 }
             });
@@ -98,10 +98,7 @@ export default class Register extends Component {
                         value="Hesap Oluştur"
                     />
                 </form>
-                
-                    {this.renderNotification()}
-         
-
+                 {this.renderNotification()}
             </div>
         );
     }

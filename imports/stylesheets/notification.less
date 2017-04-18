@@ -1,0 +1,44 @@
+#notification {
+    position:absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 400px;
+    .notification-inner {
+         height:100px;
+          padding:5px;
+          border-radius:5px;
+          color:#fff;
+          i {
+            float: left;
+            color: #fff;
+            font-size: 70px;
+            padding: 14px;
+          }
+    }
+    .warning {
+        background:#ea0000;
+        text-align:center;
+    }
+}
+.example-enter {
+    animation-name: add-item;
+    animation-duration:500ms;
+}
+@keyframes add-item {
+    from {
+        transform: scale(0, 0);
+    }
+    to {
+        transform:scale(1, 1);
+    }
+}
+.example-enter.example-enter-active #notification {
+	 right:250px;
+}
+.example-leave {
+  opacity: 1;
+}
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  transition: opacity 1000ms ease-in;
+}
