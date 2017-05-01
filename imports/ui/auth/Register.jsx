@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 
 import '../../stylesheets/register.less';
-import Notifications from '../Notification';
-
-
+import NotificationSystem from 'react-notification-system';
 
 export default class Register extends Component {
     constructor(props) {
@@ -36,10 +34,10 @@ export default class Register extends Component {
             [name]: value
         });
     }
+componentDidMount() {
+    this._notificationSystem = this.refs.notificationSystem;
+  }
     submit(event) {
-        this.setState({
-            formSubmitted: true
-        });
         event.preventDefault();
         Meteor.call('newUser',
             this.state.username,
@@ -47,22 +45,17 @@ export default class Register extends Component {
             this.state.password,
             (error) => {
                 if (error) {
-                    this.setState({
-                        type: 'error',
-                        message: 'Bu kayıt daha önceden açılmış.'
+                    this._notificationSystem.addNotification({
+                    message: 'Kayıt olurken bir hata oluştu!',
+                    level: 'error'
                     });
                 } else {
-                    this.setState({
-                        type: 'success',
-                        message: 'Başarıyla kaydoldunuz!'
+                    this._notificationSystem.addNotification({
+                    message: 'Kaydınız başarıyla oluşturuldu. Giriş sayfasına yönlendiriliyorsunuz...',
+                    level: 'success'
                     });
                 }
             });
-    }
-    renderNotification() {
-        if (this.state.formSubmitted) {
-            return <Notifications message={this.state.message} type={this.state.type} />;
-        }
     }
     render() {
         return (
@@ -98,7 +91,7 @@ export default class Register extends Component {
                         value="Hesap Oluştur"
                     />
                 </form>
-                 {this.renderNotification()}
+                 <NotificationSystem ref="notificationSystem" />
             </div>
         );
     }

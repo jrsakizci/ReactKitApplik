@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import Home from './Home';
 import Register from './auth/Register';
+import Login from './auth/Login';
 import '../stylesheets/main.less';
 
 
@@ -19,13 +20,16 @@ export default class Routes extends Component {
   toggleMobileMenu() {
     this.setState({ showHideMenu: !this.state.showHideMenu });
   }
+  isUserLoggedIn(nextState, replace) {
+
+  }
   render() {
     return (
       <div id="element">
         <div id="sidebar">
           <div className="fl left-side">
-            <div id="logo">
-              <img Link to="/" src="http://4.bp.blogspot.com/-WbHYU-bG5ho/VNP2k-lVjBI/AAAAAAAABWA/zBCShgPtYMQ/s1600/new-logo.png" alt="" />
+            <div id="logo" Link to="/">
+              <img src="http://4.bp.blogspot.com/-WbHYU-bG5ho/VNP2k-lVjBI/AAAAAAAABWA/zBCShgPtYMQ/s1600/new-logo.png" alt="" />
             </div>
           </div>
           <div className="fr right-side">
@@ -85,6 +89,7 @@ export default class Routes extends Component {
             <div className="container">
               <Route exact path='/' component={Home} />
               <Route path='/register' component={Register} />
+              <Route path='/login' component={Login} />
             </div>
           </Router>
         </div>
