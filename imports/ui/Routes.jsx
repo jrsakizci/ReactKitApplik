@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Meteor } from 'meteor/meteor';
 import {
   BrowserRouter as Router,
   Route,
@@ -20,8 +21,14 @@ export default class Routes extends Component {
   toggleMobileMenu() {
     this.setState({ showHideMenu: !this.state.showHideMenu });
   }
-  isUserLoggedIn(nextState, replace) {
-
+  isUserLoggedIn(nextState, replace, callback) {
+    Meteor.subscribe('currentUser', () => {
+      if (Meteor.user()) {
+        return true;
+      } else {
+        return false;
+      }
+    });
   }
   render() {
     return (
@@ -89,7 +96,7 @@ export default class Routes extends Component {
             <div className="container">
               <Route exact path='/' component={Home} />
               <Route path='/register' component={Register} />
-              <Route path='/login' component={Login} />
+              <Route path='/login' component={Login} onEnter={isUserLoggedIn.bind(this)} />
             </div>
           </Router>
         </div>
