@@ -3,13 +3,50 @@ import { Meteor } from 'meteor/meteor';
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
+  Redirect,
+  browserHistory
 } from 'react-router-dom';
 import Home from './Home';
 import Register from './auth/Register';
 import Login from './auth/Login';
 import '../stylesheets/main.less';
+import NotificationSystem from 'react-notification-system';
+import createHistory from 'history/createBrowserHistory';
 
+const history = createHistory();
+
+export function isUserLoggedIn() {
+  if (Meteor.userId()) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={props => (
+    isUserLoggedIn() ? (
+      <Component {...props} />
+    ) : (
+        <Redirect to={{
+          pathname: '/login',
+        }} />
+      )
+  )} />
+)
+
+const ProtectedRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={props => (
+    !isUserLoggedIn() ? (
+      <Component {...props} />
+    ) : (
+        <Redirect to={{
+          pathname: '/',
+        }} />
+      )
+  )} />
+)
 
 export default class Routes extends Component {
   constructor(props) {
@@ -18,19 +55,33 @@ export default class Routes extends Component {
       showHideMenu: 'hide',
     };
   }
+  componentDidMount() {
+    this._notificationSystem = this.refs.notificationSystem;
+  }
+
   toggleMobileMenu() {
     this.setState({ showHideMenu: !this.state.showHideMenu });
   }
-  isUserLoggedIn(nextState, replace, callback) {
-    Meteor.subscribe('currentUser', () => {
-      if (Meteor.user()) {
-        return true;
-      } else {
-        return false;
-      }
+  logOut() {
+    this._notificationSystem.addNotification({
+      level: 'info',
+      message: 'Çıkış yaptınız, yönlendiriliyorsunuz lütfen bekleyin.'
     });
+    Meteor.logout();
+    setTimeout(() => {
+      browserHistory.push('/login');
+    }, 1500);
+    
   }
   render() {
+    const isLoggedIn = isUserLoggedIn();
+    let loginButton = null;
+
+    if (isLoggedIn) {
+      loginButton = <a onClick={this.logOut.bind(this)}>Çıkış Yap</a>;
+    } else {
+      loginButton = <a>Giriş Yap / Üye Ol</a>;
+    }
     return (
       <div id="element">
         <div id="sidebar">
@@ -41,8 +92,8 @@ export default class Routes extends Component {
           </div>
           <div className="fr right-side">
             <div id="login-top">
-              Giriş Yap / Üye Ol
-          </div>
+              {loginButton}
+            </div>
 
           </div>
           <div id="menu">
@@ -52,11 +103,11 @@ export default class Routes extends Component {
                   <i className="fa fa-home header-icon" aria-hidden="true" /> Anasayfa</a>
               </li>
               <li>
-                <a href="#">
+                <a>
                   <i className="fa fa-book header-icon" aria-hidden="true" /> Kategoriler</a>
               </li>
               <li>
-                <a href="#">
+                <a>
                   <i className="fa fa-search header-icon" aria-hidden="true" />Arama</a>
               </li>
             </ul>
@@ -64,42 +115,43 @@ export default class Routes extends Component {
           <div id="mobile-menu" onClick={this.toggleMobileMenu.bind(this)}>
             MENU
         </div>
-        <div id="mobile-toggle-menu" className={this.state.showHideMenu ? 'hide' : 'show'}>
-          <ul>
-            <li>
-              <i className="fa fa-home header-icon fl" aria-hidden="true" />
-              <a className="fr">Anasayfa</a>
-            </li>
-            <div className="cf" />
-            <li>
-              <i className="fa fa-book header-icon fl" aria-hidden="true" />
-              <a href="#" className="fr"> Kategoriler</a>
+          <div id="mobile-toggle-menu" className={this.state.showHideMenu ? 'hide' : 'show'}>
+            <ul>
+              <li>
+                <i className="fa fa-home header-icon fl" aria-hidden="true" />
+                <a className="fr">Anasayfa</a>
               </li>
-            <div className="cf" />
-            <li>
-              <i className="fa fa-search header-icon fl" aria-hidden="true" />
-              <a href="#" className="fr"> Arama</a>
+              <div className="cf" />
+              <li>
+                <i className="fa fa-book header-icon fl" aria-hidden="true" />
+                <a href="#" className="fr"> Kategoriler</a>
               </li>
-            <div className="cf" />
-            <li>
-              <i className="fa fa-plus header-icon fl" aria-hidden="true" />
-              <a href="#" className="fr"> Kitap Ekle</a>
-            </li>
-            <div className="cf" />
-          </ul>
-        </div>
+              <div className="cf" />
+              <li>
+                <i className="fa fa-search header-icon fl" aria-hidden="true" />
+                <a href="#" className="fr"> Arama</a>
+              </li>
+              <div className="cf" />
+              <li>
+                <i className="fa fa-plus header-icon fl" aria-hidden="true" />
+                <a href="#" className="fr"> Kitap Ekle</a>
+              </li>
+              <div className="cf" />
+            </ul>
+          </div>
 
         </div>
         <div className="cf" />
         <div id="content">
-          <Router>
+          <Router history={browserHistory}>
             <div className="container">
-              <Route exact path='/' component={Home} />
-              <Route path='/register' component={Register} />
-              <Route path='/login' component={Login} onEnter={isUserLoggedIn.bind(this)} />
+              <PrivateRoute exact path='/' component={Home} />
+              <ProtectedRoute path='/register' component={Register} />
+              <ProtectedRoute path='/login' component={Login} />
             </div>
           </Router>
         </div>
+        <NotificationSystem ref="notificationSystem" />
       </div>
     );
   }

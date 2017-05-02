@@ -34,9 +34,9 @@ export default class Register extends Component {
             [name]: value
         });
     }
-componentDidMount() {
-    this._notificationSystem = this.refs.notificationSystem;
-  }
+    componentDidMount() {
+        this._notificationSystem = this.refs.notificationSystem;
+    }
     submit(event) {
         event.preventDefault();
         Meteor.call('newUser',
@@ -46,13 +46,13 @@ componentDidMount() {
             (error) => {
                 if (error) {
                     this._notificationSystem.addNotification({
-                    message: 'Kayıt olurken bir hata oluştu!',
-                    level: 'error'
+                        message: 'Kayıt olurken bir hata oluştu!',
+                        level: 'error'
                     });
                 } else {
                     this._notificationSystem.addNotification({
-                    message: 'Kaydınız başarıyla oluşturuldu. Giriş sayfasına yönlendiriliyorsunuz...',
-                    level: 'success'
+                        message: 'Kaydınız başarıyla oluşturuldu. Giriş sayfasına yönlendiriliyorsunuz...',
+                        level: 'success'
                     });
                 }
             });
@@ -91,7 +91,7 @@ componentDidMount() {
                         value="Hesap Oluştur"
                     />
                 </form>
-                 <NotificationSystem ref="notificationSystem" />
+                <NotificationSystem ref="notificationSystem" />
             </div>
         );
     }
