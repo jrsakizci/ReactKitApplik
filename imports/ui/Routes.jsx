@@ -4,8 +4,7 @@ import {
   BrowserRouter as Router,
   Route,
   Link,
-  Redirect,
-  browserHistory
+  Redirect
 } from 'react-router-dom';
 import Home from './Home';
 import Register from './auth/Register';
@@ -14,7 +13,7 @@ import '../stylesheets/main.less';
 import NotificationSystem from 'react-notification-system';
 import createHistory from 'history/createBrowserHistory';
 
-const history = createHistory();
+export const history = createHistory();
 
 export function isUserLoggedIn() {
   if (Meteor.userId()) {
@@ -23,7 +22,6 @@ export function isUserLoggedIn() {
     return false;
   }
 }
-
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
     isUserLoggedIn() ? (
@@ -49,16 +47,25 @@ const ProtectedRoute = ({ component: Component, ...rest }) => (
 )
 
 export default class Routes extends Component {
+  
   constructor(props) {
     super(props);
     this.state = {
       showHideMenu: 'hide',
+      isUserLoggedIn: false
     };
+  }
+
+  componentWillMount() {
+    if (isUserLoggedIn()) {
+       this.setState({ isUserLoggedIn: true });
+    } else {
+       this.setState({ isUserLoggedIn: false });
+    }
   }
   componentDidMount() {
     this._notificationSystem = this.refs.notificationSystem;
   }
-
   toggleMobileMenu() {
     this.setState({ showHideMenu: !this.state.showHideMenu });
   }
@@ -68,25 +75,25 @@ export default class Routes extends Component {
       message: 'Çıkış yaptınız, yönlendiriliyorsunuz lütfen bekleyin.'
     });
     Meteor.logout();
+    this.setState({ isUserLoggedIn: false });
     setTimeout(() => {
-      browserHistory.push('/login');
+      history.push('/login');
+      history.go(-1);
     }, 1500);
     
   }
   render() {
-    const isLoggedIn = isUserLoggedIn();
     let loginButton = null;
-
-    if (isLoggedIn) {
+    if (this.state.isUserLoggedIn) {
       loginButton = <a onClick={this.logOut.bind(this)}>Çıkış Yap</a>;
     } else {
-      loginButton = <a>Giriş Yap / Üye Ol</a>;
+        loginButton =<a>Giriş Yap / Üye Ol</a>;
     }
     return (
       <div id="element">
         <div id="sidebar">
           <div className="fl left-side">
-            <div id="logo" Link to="/">
+            <div id="logo">
               <img src="http://4.bp.blogspot.com/-WbHYU-bG5ho/VNP2k-lVjBI/AAAAAAAABWA/zBCShgPtYMQ/s1600/new-logo.png" alt="" />
             </div>
           </div>
@@ -94,7 +101,6 @@ export default class Routes extends Component {
             <div id="login-top">
               {loginButton}
             </div>
-
           </div>
           <div id="menu">
             <ul>
@@ -143,7 +149,7 @@ export default class Routes extends Component {
         </div>
         <div className="cf" />
         <div id="content">
-          <Router history={browserHistory}>
+          <Router history={history}>
             <div className="container">
               <PrivateRoute exact path='/' component={Home} />
               <ProtectedRoute path='/register' component={Register} />

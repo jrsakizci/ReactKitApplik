@@ -3,14 +3,13 @@ import { Meteor } from 'meteor/meteor';
 import {
   BrowserRouter as Router,
   Route,
-  Link,
-  browserHistory
+  Link
 } from 'react-router-dom';
 
 import NotificationSystem from 'react-notification-system';
 import createHistory from 'history/createBrowserHistory';
 
-const history = createHistory();
+export const history = createHistory();
 
 export default class Login extends Component {
     constructor(props) {
@@ -50,11 +49,13 @@ export default class Login extends Component {
                         level: 'success',
                         message: 'Başarıyla giriş yaptınız, yönlendiriliyorsunuz..'
                     });
+                     console.log(this.props.isUserLoggedIn);
                     setTimeout(() => {
-                        browserHistory.push('/');
+                       history.push('/');
+                       history.go(-1);
                     }, 2000);
                 }
-            })
+            });
     }
     render() {
         return (
