@@ -49,7 +49,6 @@ export default class Login extends Component {
                         level: 'success',
                         message: 'Başarıyla giriş yaptınız, yönlendiriliyorsunuz..'
                     });
-                     console.log(this.props.isUserLoggedIn);
                     setTimeout(() => {
                        history.push('/');
                        history.go(-1);

@@ -9,18 +9,17 @@ import {
 import Home from './Home';
 import Register from './auth/Register';
 import Login from './auth/Login';
+import AuthContainer from './auth/AuthContainer';
 import '../stylesheets/main.less';
 import NotificationSystem from 'react-notification-system';
 import createHistory from 'history/createBrowserHistory';
+import PropTypes from 'prop-types';
 
 export const history = createHistory();
 
+
 export function isUserLoggedIn() {
-  if (Meteor.userId()) {
-    return true;
-  } else {
-    return false;
-  }
+  
 }
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
@@ -46,23 +45,16 @@ const ProtectedRoute = ({ component: Component, ...rest }) => (
   )} />
 )
 
-export default class Routes extends Component {
-  
+export default class Routes extends React.Component {
   constructor(props) {
     super(props);
+    this.props.user = {};
+    console.log(this.props);
     this.state = {
       showHideMenu: 'hide',
-      isUserLoggedIn: false
     };
   }
-
-  componentWillMount() {
-    if (isUserLoggedIn()) {
-       this.setState({ isUserLoggedIn: true });
-    } else {
-       this.setState({ isUserLoggedIn: false });
-    }
-  }
+  
   componentDidMount() {
     this._notificationSystem = this.refs.notificationSystem;
   }
@@ -75,7 +67,6 @@ export default class Routes extends Component {
       message: 'Çıkış yaptınız, yönlendiriliyorsunuz lütfen bekleyin.'
     });
     Meteor.logout();
-    this.setState({ isUserLoggedIn: false });
     setTimeout(() => {
       history.push('/login');
       history.go(-1);
@@ -84,10 +75,10 @@ export default class Routes extends Component {
   }
   render() {
     let loginButton = null;
-    if (this.state.isUserLoggedIn) {
+    if (this.props.user) {
       loginButton = <a onClick={this.logOut.bind(this)}>Çıkış Yap</a>;
     } else {
-        loginButton =<a>Giriş Yap / Üye Ol</a>;
+        loginButton = <a>Giriş Yap / Üye Ol</a>;
     }
     return (
       <div id="element">

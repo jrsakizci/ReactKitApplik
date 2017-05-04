@@ -25,7 +25,9 @@ export default class Register extends Component {
             password: 'şifre'
         };
     }
-
+    componentDidMount() {
+        this._notificationSystem = this.refs.notificationSystem;
+    }
     handleInputChange(event) {
         const value = event.target.value;
         const name = event.target.name;
@@ -33,9 +35,6 @@ export default class Register extends Component {
         this.setState({
             [name]: value
         });
-    }
-    componentDidMount() {
-        this._notificationSystem = this.refs.notificationSystem;
     }
     submit(event) {
         event.preventDefault();
