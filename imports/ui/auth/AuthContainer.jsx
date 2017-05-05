@@ -6,9 +6,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 
 export default AuthContainer = createContainer((props) => {
-   Meteor.subscribe('currentUser', {
-        onReady: () => { console.log('ready'); }
-    });
+   Meteor.subscribe('currentUser');
   return {
     user: Meteor.user() || {}
   };

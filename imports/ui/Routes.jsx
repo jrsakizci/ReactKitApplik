@@ -17,39 +17,9 @@ import PropTypes from 'prop-types';
 
 export const history = createHistory();
 
-
-export function isUserLoggedIn() {
-  
-}
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={props => (
-    isUserLoggedIn() ? (
-      <Component {...props} />
-    ) : (
-        <Redirect to={{
-          pathname: '/login',
-        }} />
-      )
-  )} />
-)
-
-const ProtectedRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={props => (
-    !isUserLoggedIn() ? (
-      <Component {...props} />
-    ) : (
-        <Redirect to={{
-          pathname: '/',
-        }} />
-      )
-  )} />
-)
-
 export default class Routes extends React.Component {
   constructor(props) {
     super(props);
-    this.props.user = {};
-    console.log(this.props);
     this.state = {
       showHideMenu: 'hide',
     };
@@ -75,7 +45,7 @@ export default class Routes extends React.Component {
   }
   render() {
     let loginButton = null;
-    if (this.props.user) {
+    if (this.props.user.username) {
       loginButton = <a onClick={this.logOut.bind(this)}>Çıkış Yap</a>;
     } else {
         loginButton = <a>Giriş Yap / Üye Ol</a>;
@@ -142,9 +112,9 @@ export default class Routes extends React.Component {
         <div id="content">
           <Router history={history}>
             <div className="container">
-              <PrivateRoute exact path='/' component={Home} />
-              <ProtectedRoute path='/register' component={Register} />
-              <ProtectedRoute path='/login' component={Login} />
+              <Route exact path='/' component={Home} />
+              <Route path='/register' component={Register} />
+              <Route path='/login' component={Login} />
             </div>
           </Router>
         </div>

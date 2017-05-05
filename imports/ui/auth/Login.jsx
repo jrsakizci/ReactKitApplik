@@ -49,10 +49,8 @@ export default class Login extends Component {
                         level: 'success',
                         message: 'Başarıyla giriş yaptınız, yönlendiriliyorsunuz..'
                     });
-                    setTimeout(() => {
                        history.push('/');
                        history.go(-1);
-                    }, 2000);
                 }
             });
     }

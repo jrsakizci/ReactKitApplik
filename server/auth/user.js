@@ -8,7 +8,7 @@ if (Meteor.isServer) {
             if (user) {
                return user;
             }
-            return {};
+            return [];
     });
     Meteor.methods({
         newUser: (uname, emailn, passwordn) => {
