@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { render } from 'react-dom';
-import { Router, Route, Link, IndexRoute, browserHistory  } from 'react-router-dom';
+import { Router, Route, Link, browserHistory  } from 'react-router';
 import AuthContainer from '../imports/ui/auth/AuthContainer';
 
 

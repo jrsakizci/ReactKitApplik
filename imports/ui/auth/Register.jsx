@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
-
+import { browserHistory } from 'react-router';
 import '../../stylesheets/register.less';
 import NotificationSystem from 'react-notification-system';
 
@@ -52,7 +52,10 @@ export default class Register extends Component {
                     this._notificationSystem.addNotification({
                         message: 'Kaydınız başarıyla oluşturuldu. Giriş sayfasına yönlendiriliyorsunuz...',
                         level: 'success'
-                    });
+                    }); 
+                    setTimeout(() => {
+                        browserHistory.push('/login');
+                    }, 1500);
                 }
             });
     }

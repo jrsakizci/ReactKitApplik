@@ -1,21 +1,44 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import {
-  BrowserRouter as Router,
+  Router,
   Route,
   Link,
-  Redirect
-} from 'react-router-dom';
+  Redirect,
+  browserHistory
+} from 'react-router';
 import Home from './Home';
 import Register from './auth/Register';
 import Login from './auth/Login';
-import AuthContainer from './auth/AuthContainer';
 import '../stylesheets/main.less';
 import NotificationSystem from 'react-notification-system';
-import createHistory from 'history/createBrowserHistory';
-import PropTypes from 'prop-types';
 
-export const history = createHistory();
+/* Routes and authentication */
+function isUserLoggedIn() {
+  if (!Meteor.userId()) {
+    browserHistory.push('/login');
+  }
+}
+function isUserNotLoggedIn() {
+  if (Meteor.userId()) {
+    browserHistory.push('/');
+  }
+}
+/* Routes */
+const routes = [{
+  path: '/',
+  component: Home,
+  onEnter: isUserLoggedIn
+},
+{
+  path: '/login',
+  component: Login,
+  onEnter: isUserNotLoggedIn
+}, {
+  path: '/register',
+  component: Register,
+  onEnter: isUserNotLoggedIn
+}];
 
 export default class Routes extends React.Component {
   constructor(props) {
@@ -24,7 +47,6 @@ export default class Routes extends React.Component {
       showHideMenu: 'hide',
     };
   }
-  
   componentDidMount() {
     this._notificationSystem = this.refs.notificationSystem;
   }
@@ -38,19 +60,18 @@ export default class Routes extends React.Component {
     });
     Meteor.logout();
     setTimeout(() => {
-      history.push('/login');
-      history.go(-1);
+      browserHistory.push('/login');
     }, 1500);
-    
   }
   render() {
     let loginButton = null;
     if (this.props.user.username) {
       loginButton = <a onClick={this.logOut.bind(this)}>Çıkış Yap</a>;
     } else {
-        loginButton = <a>Giriş Yap / Üye Ol</a>;
+      loginButton = <a>Giriş Yap / Üye Ol</a>;
     }
     return (
+
       <div id="element">
         <div id="sidebar">
           <div className="fl left-side">
@@ -110,11 +131,8 @@ export default class Routes extends React.Component {
         </div>
         <div className="cf" />
         <div id="content">
-          <Router history={history}>
+          <Router history={browserHistory} routes={routes}>
             <div className="container">
-              <Route exact path='/' component={Home} />
-              <Route path='/register' component={Register} />
-              <Route path='/login' component={Login} />
             </div>
           </Router>
         </div>
