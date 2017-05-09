@@ -10,6 +10,8 @@ import {
 import Home from './Home';
 import Register from './auth/Register';
 import Login from './auth/Login';
+import newItem from './NewItem';
+import Profil from './Profile';
 import '../stylesheets/main.less';
 import NotificationSystem from 'react-notification-system';
 
@@ -38,6 +40,14 @@ const routes = [{
   path: '/register',
   component: Register,
   onEnter: isUserNotLoggedIn
+}, {
+  path: '/add-item',
+  component: newItem,
+  onEnter: isUserLoggedIn 
+}, {
+  path: '/profil',
+  component: Profil,
+  onEnter: isUserLoggedIn
 }];
 
 export default class Routes extends React.Component {
@@ -65,13 +75,19 @@ export default class Routes extends React.Component {
   }
   render() {
     let loginButton = null;
+    let bookLink = null;
+    let profileLink = null;
+
     if (this.props.user.username) {
       loginButton = <a onClick={this.logOut.bind(this)}>Çıkış Yap</a>;
+      bookLink = <li><a href="/add-item"><i className="fa fa-plus header-icon" aria-hidden="true" /> İçerik Ekle</a></li>;
+      profileLink = <li><a><i className="fa fa-user header-icon" aria-hidden="true" /> Profil</a></li>;
     } else {
-      loginButton = <a>Giriş Yap / Üye Ol</a>;
+      loginButton = <a> Giriş Yap / Üye Ol </a>;
+      bookLink = null;
+      profileLink = null;
     }
     return (
-
       <div id="element">
         <div id="sidebar">
           <div className="fl left-side">
@@ -96,8 +112,10 @@ export default class Routes extends React.Component {
               </li>
               <li>
                 <a>
-                  <i className="fa fa-search header-icon" aria-hidden="true" />Arama</a>
+                  <i className="fa fa-search header-icon" aria-hidden="true" /> Arama</a>
               </li>
+              {bookLink}
+              {profileLink}
             </ul>
           </div>
           <div id="mobile-menu" onClick={this.toggleMobileMenu.bind(this)}>
@@ -106,25 +124,19 @@ export default class Routes extends React.Component {
           <div id="mobile-toggle-menu" className={this.state.showHideMenu ? 'hide' : 'show'}>
             <ul>
               <li>
-                <i className="fa fa-home header-icon fl" aria-hidden="true" />
-                <a className="fr">Anasayfa</a>
+                <i className="fa fa-home header-icon" aria-hidden="true" />
+                <a> Anasayfa</a>
               </li>
-              <div className="cf" />
               <li>
-                <i className="fa fa-book header-icon fl" aria-hidden="true" />
-                <a href="#" className="fr"> Kategoriler</a>
+                <i className="fa fa-book header-icon" aria-hidden="true" />
+                <a href="#"> Kategoriler</a>
               </li>
-              <div className="cf" />
               <li>
-                <i className="fa fa-search header-icon fl" aria-hidden="true" />
-                <a href="#" className="fr"> Arama</a>
+                <i className="fa fa-search header-icon" aria-hidden="true" />
+                <a href="#"> Arama</a>
               </li>
-              <div className="cf" />
-              <li>
-                <i className="fa fa-plus header-icon fl" aria-hidden="true" />
-                <a href="#" className="fr"> Kitap Ekle</a>
-              </li>
-              <div className="cf" />
+              {bookLink}
+              {profileLink}
             </ul>
           </div>
 
