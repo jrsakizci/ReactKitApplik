@@ -5,7 +5,7 @@ import {
   Route,
   Link,
   Redirect,
-  browserHistory
+  browserHistory,
 } from 'react-router';
 import Home from './Home';
 import Register from './auth/Register';
@@ -30,25 +30,26 @@ function isUserNotLoggedIn() {
 const routes = [{
   path: '/',
   component: Home,
-  onEnter: isUserLoggedIn
+  onEnter: isUserLoggedIn,
 },
-{
-  path: '/login',
-  component: Login,
-  onEnter: isUserNotLoggedIn
-}, {
-  path: '/register',
-  component: Register,
-  onEnter: isUserNotLoggedIn
-}, {
-  path: '/add-item',
-  component: newItem,
-  onEnter: isUserLoggedIn 
-}, {
-  path: '/profil',
-  component: Profil,
-  onEnter: isUserLoggedIn
-}];
+    {
+      path: '/login',
+      component: Login,
+      onEnter: isUserNotLoggedIn
+    }, {
+      path: '/register',
+      component: Register,
+      onEnter: isUserNotLoggedIn
+    }, {
+      path: '/add-item',
+      component: newItem,
+      onEnter: isUserLoggedIn
+    }, {
+      path: '/profil',
+      component: Profil,
+      onEnter: isUserLoggedIn
+    }
+];
 
 export default class Routes extends React.Component {
   constructor(props) {
@@ -70,8 +71,13 @@ export default class Routes extends React.Component {
     });
     Meteor.logout();
     setTimeout(() => {
-      browserHistory.push('/login');
+      browserHistory.push('login');
     }, 1500);
+  }
+  goRoute(param) {
+    setTimeout(() => {
+      browserHistory.push(param);
+    }, 50);
   }
   render() {
     let loginButton = null;
@@ -80,10 +86,10 @@ export default class Routes extends React.Component {
 
     if (this.props.user.username) {
       loginButton = <a onClick={this.logOut.bind(this)}>Çıkış Yap</a>;
-      bookLink = <li><a href="/add-item"><i className="fa fa-plus header-icon" aria-hidden="true" /> İçerik Ekle</a></li>;
-      profileLink = <li><a><i className="fa fa-user header-icon" aria-hidden="true" /> Profil</a></li>;
+      bookLink = <li onClick={() => this.goRoute('/add-item')}><i className="fa fa-plus header-icon" aria-hidden="true" /> İçerik Ekle</li>;
+      profileLink = <li onClick={() => this.goRoute('/profil')}><a><i className="fa fa-user header-icon" aria-hidden="true" /> Profil</a></li>;
     } else {
-      loginButton = <a> Giriş Yap / Üye Ol </a>;
+      loginButton = <a onClick={() => this.goRoute('/login')}> Giriş Yap / Üye Ol </a>;
       bookLink = null;
       profileLink = null;
     }
@@ -135,7 +141,7 @@ export default class Routes extends React.Component {
                 <i className="fa fa-search header-icon" aria-hidden="true" />
                 <a href="#"> Arama</a>
               </li>
-              {bookLink}
+              <Link to="/add-item">{bookLink}</Link>
               {profileLink}
             </ul>
           </div>
@@ -144,8 +150,7 @@ export default class Routes extends React.Component {
         <div className="cf" />
         <div id="content">
           <Router history={browserHistory} routes={routes}>
-            <div className="container">
-            </div>
+
           </Router>
         </div>
         <NotificationSystem ref="notificationSystem" />

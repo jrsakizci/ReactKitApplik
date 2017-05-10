@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom'
+import { Meteor } from 'meteor/meteor';
+import { browserHistory } from 'react-router';
+import NotificationSystem from 'react-notification-system';
 
 export default class Home extends Component {
   render() {
