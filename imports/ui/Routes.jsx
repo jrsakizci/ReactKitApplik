@@ -11,7 +11,8 @@ import Home from './Home';
 import Register from './auth/Register';
 import Login from './auth/Login';
 import newItem from './NewItem';
-import Profil from './Profile';
+import Profile from './Profile';
+import ProfileContainer from './ProfileContainer';
 import '../stylesheets/main.less';
 import NotificationSystem from 'react-notification-system';
 
@@ -46,7 +47,7 @@ const routes = [{
       onEnter: isUserLoggedIn
     }, {
       path: '/profil',
-      component: Profil,
+      component: ProfileContainer,
       onEnter: isUserLoggedIn
     }
 ];
