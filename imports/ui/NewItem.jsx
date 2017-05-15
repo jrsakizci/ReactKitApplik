@@ -8,7 +8,35 @@ export default class NewItem extends Component {
 
     render() {
     return (
-        <strong>new Item</strong>
+        <div id="login">
+                <form onSubmit={this.submitContent}>
+                    <input
+                        type="text"
+                        placeholder="Döküman Adı"
+                        id="document_name"
+                        name="document_name"
+                        required
+                    />
+                    <input
+                        type="text"
+                        placeholder="Kitap/Döküman ne hakkında? Ne kadar eski? vb.."
+                        id="document_description"
+                        name="document_description"
+                        required
+                    />
+                    <input 
+                        type="file" 
+                        name="document_image" 
+                        accept="image/x-png,image/gif,image/jpeg" 
+                    />
+                    <input
+                        type="submit"
+                        className="login-sbmt"
+                        value="Dökümanı Oluştur"
+                    />
+                </form>
+                <NotificationSystem ref="notificationSystem" />
+            </div>
     );
     }
 }

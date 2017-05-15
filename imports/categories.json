@@ -1,0 +1,66 @@
+{
+    "documents":[
+        {
+            "id":0,
+            "name": "Ödevler"
+        },
+        {
+            "id":1,
+            "name": "Dökümanlar"
+        },
+        {
+            "id":2,
+            "name": "Bölüm Kitapları"
+        }
+    ],
+    "books": [
+        {
+            "id":0,
+            "name": "Edebiyat"
+        },
+        {
+            "id":1,
+            "name": "Çocuk ve Gençlik"
+        },
+        {
+            "id":2,
+            "name": "Eğitim"
+        },
+        {
+            "id":3,
+            "name": "Araştırma ve Tarih"
+        },
+        {
+            "id":4,
+            "name": "Din ve Mitoloji"
+        },
+        {
+            "id":5,
+            "name": "Foreign Languages"
+        },
+        {
+            "id":6,
+            "name": "Sanat - Tasarım"
+        },
+        {
+            "id":7,
+            "name": "Felsefe"
+        },
+        {
+            "id":8,
+            "name": "Hobi"
+        },
+        {
+            "id":9,
+            "name": "Çizgi Roman"
+        },
+        {
+            "id":10,
+            "name": "Bilim"
+        },
+        {
+            "id":11,
+            "name": "Mizah"
+        }
+    ]
+}

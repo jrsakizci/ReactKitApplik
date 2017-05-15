@@ -27,5 +27,25 @@ if (Meteor.isServer) {
                throw err;
             }
         },
+        changeUsername: (uname) => {
+            try {
+                Accounts.setUsername(Meteor.userId(), uname);
+            }
+            catch (err) {
+                throw err;
+            }
+        },
+        changeEmail: (newEmail) => {
+            try {
+                const user = Meteor.users.findOne(Meteor.userId());
+                if (user) {
+                    Accounts.removeEmail(Meteor.userId(), user.emails[0].address);
+                }
+                Accounts.addEmail(Meteor.userId(), newEmail, false);
+            }
+            catch (err) {
+                throw err;
+            }
+        },
     });
 }
