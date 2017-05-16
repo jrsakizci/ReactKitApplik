@@ -11,9 +11,6 @@ export default class Register extends Component {
             username: 'kullanıcı adı',
             email: 'email',
             password: 'şifre',
-            formSubmitted: false,
-            type: null,
-            message: null
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.submit = this.submit.bind(this);
