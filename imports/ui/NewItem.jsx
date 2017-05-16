@@ -2,13 +2,24 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { browserHistory } from 'react-router';
 import NotificationSystem from 'react-notification-system';
-
+import 'react-widgets/lib/less/react-widgets.less';
+import categories from '../categories.json';
+import Multiselect from 'react-widgets/lib/Multiselect';
 
 export default class NewItem extends Component {
 
+    
     render() {
-    return (
-        <div id="login">
+        const options = [];
+        categories.books.forEach((opt) => {
+            options.push(opt);
+        });
+        categories.documents.forEach((opt) => {
+            options.push(opt);
+        });
+        console.log(options);
+        return (
+            <div id="login">
                 <form onSubmit={this.submitContent}>
                     <input
                         type="text"
@@ -24,19 +35,25 @@ export default class NewItem extends Component {
                         name="document_description"
                         required
                     />
-                    <input 
-                        type="file" 
-                        name="document_image" 
-                        accept="image/x-png,image/gif,image/jpeg" 
+                    <Multiselect
+                        data={options}
+                        valueField='id'
+                        textField='name'
+                    />
+                    <input
+                        type="file"
+                        id="filePic"
+                        name="filePic"
+                        required
                     />
                     <input
                         type="submit"
                         className="login-sbmt"
-                        value="Dökümanı Oluştur"
+                        value="Gönder"
                     />
                 </form>
-                <NotificationSystem ref="notificationSystem" />
-            </div>
-    );
+            <NotificationSystem ref="notificationSystem" />
+            </div >
+        );
     }
 }

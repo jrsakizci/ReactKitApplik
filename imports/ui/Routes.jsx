@@ -13,13 +13,14 @@ import Login from './auth/Login';
 import newItem from './NewItem';
 import Profile from './Profile';
 import ProfileContainer from './ProfileContainer';
+import Categories from './Categories';
 import '../stylesheets/main.less';
 import NotificationSystem from 'react-notification-system';
 
 /* Routes and authentication */
 function isUserLoggedIn() {
   if (!Meteor.userId()) {
-    browserHistory.push('/login');
+    browserHistory.push('/giris-yap');
   }
 }
 function isUserNotLoggedIn() {
@@ -34,21 +35,24 @@ const routes = [{
   onEnter: isUserLoggedIn,
 },
     {
-      path: '/login',
+      path: '/giris-yap',
       component: Login,
       onEnter: isUserNotLoggedIn
     }, {
-      path: '/register',
+      path: '/kayit-ol',
       component: Register,
       onEnter: isUserNotLoggedIn
     }, {
-      path: '/add-item',
+      path: '/icerik-ekle',
       component: newItem,
       onEnter: isUserLoggedIn
     }, {
       path: '/profil',
       component: ProfileContainer,
       onEnter: isUserLoggedIn
+    }, {
+      path: '/kategoriler',
+      component: Categories
     }
 ];
 
@@ -87,10 +91,10 @@ export default class Routes extends React.Component {
 
     if (this.props.user.username) {
       loginButton = <a onClick={this.logOut.bind(this)}>Çıkış Yap</a>;
-      bookLink = <li onClick={() => this.goRoute('/add-item')}><i className="fa fa-plus header-icon" aria-hidden="true" /> İçerik Ekle</li>;
+      bookLink = <li onClick={() => this.goRoute('/icerik-ekle')}><i className="fa fa-plus header-icon" aria-hidden="true" /> İçerik Ekle</li>;
       profileLink = <li onClick={() => this.goRoute('/profil')}><a><i className="fa fa-user header-icon" aria-hidden="true" /> Profil</a></li>;
     } else {
-      loginButton = <a onClick={() => this.goRoute('/login')}> Giriş Yap / Üye Ol </a>;
+      loginButton = <a onClick={() => this.goRoute('/giris-yap')}> Giriş Yap / Üye Ol </a>;
       bookLink = null;
       profileLink = null;
     }
@@ -109,11 +113,11 @@ export default class Routes extends React.Component {
           </div>
           <div id="menu">
             <ul>
-              <li>
+              <li onClick={() => this.goRoute('/')}>
                 <a>
                   <i className="fa fa-home header-icon" aria-hidden="true" /> Anasayfa</a>
               </li>
-              <li>
+              <li onClick={() => this.goRoute('/kategoriler')}>
                 <a>
                   <i className="fa fa-book header-icon" aria-hidden="true" /> Kategoriler</a>
               </li>

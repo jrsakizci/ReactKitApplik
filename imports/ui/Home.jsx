@@ -7,9 +7,10 @@ import { geolocated } from 'react-geolocated';
 class Home extends Component {
   constructor(props) {
     super(props);
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
   componentDidMount() {
-
+    console.log(this.props.coords);
   }
   render() {
     return (

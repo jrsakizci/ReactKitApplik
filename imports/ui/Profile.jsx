@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router';
 import '../stylesheets/profile.less';
 import NotificationSystem from 'react-notification-system';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-
+import { Slingshot } from 'meteor/edgee:slingshot';
 
 export default class Profile extends Component {
     constructor(props) {
@@ -28,7 +28,7 @@ export default class Profile extends Component {
             newPassword: 'yeni şifreniz',
             oldPassword: 'eski şifreniz'
         }
-        
+
     }
     componentDidMount() {
         this._notificationSystem = this.refs.notificationSystem;
@@ -81,24 +81,47 @@ export default class Profile extends Component {
         event.preventDefault();
         if (this.state.oldPassword === this.state.newPassword) {
             this._notificationSystem.addNotification({
-                        message: 'Yeni şifreniz eskisiyle aynı olamaz.',
-                        level: 'error'
+                message: 'Yeni şifreniz eskisiyle aynı olamaz.',
+                level: 'error'
             });
             return;
         }
         try {
             Accounts.changePassword(this.state.oldPassword, this.state.newPassword);
             this._notificationSystem.addNotification({
-                        message: 'Şifreniz başarıyla değiştirildi.',
-                        level: 'success'
-                    });
+                message: 'Şifreniz başarıyla değiştirildi.',
+                level: 'success'
+            });
         }
         catch (err) {
             this._notificationSystem.addNotification({
-                        message: 'Şifreniz değiştirilirken bir sorunla karşılaşıldı.',
-                        level: 'error'
+                message: 'Şifreniz değiştirilirken bir sorunla karşılaşıldı.',
+                level: 'error'
             });
         }
+    }
+    uploadPic(event) {
+        event.preventDefault();
+        const uploader = new Slingshot.Upload('myFileUploads');
+        uploader.send(document.getElementById('filePic').files[0], (error, downloadUrl) => {
+            if (error) {
+                this._notificationSystem.addNotification({
+                    message: uploader.xhr.response,
+                    level: 'error'
+                });
+            }
+            else {
+                try {
+                    Meteor.users.update(Meteor.userId(), { $set: { 'profile.profilePic': downloadUrl } });
+                }
+                catch (err) {
+                    this._notificationSystem.addNotification({
+                        message: 'Resmi veritabanına kaydederken bi hata oluştu lütfen sonra tekrar deneyiniz.',
+                        level: 'error'
+                    });
+                }
+            }
+            });
     }
     render() {
         return (
@@ -108,7 +131,7 @@ export default class Profile extends Component {
                         <Tab>Kullanıcı Adı Düzenle</Tab>
                         <Tab>Email Düzenle</Tab>
                         <Tab>Şifre Düzenle</Tab>
-                        <Tab>İçeriklerim</Tab>
+                        <Tab>Profil Resmi Düzenle</Tab>
                     </TabList>
 
                     <TabPanel>
@@ -127,7 +150,7 @@ export default class Profile extends Component {
                                     <input
                                         type="submit"
                                         className="login-sbmt"
-                                        value="Değiştir"
+                                        value="Güncelle"
                                     />
                                 </form>
 
@@ -150,7 +173,7 @@ export default class Profile extends Component {
                                     <input
                                         type="submit"
                                         className="login-sbmt"
-                                        value="Değiştir"
+                                        value="Güncelle"
                                     />
                                 </form>
 
@@ -182,14 +205,33 @@ export default class Profile extends Component {
                                     <input
                                         type="submit"
                                         className="login-sbmt"
-                                        value="Değiştir"
+                                        value="Güncelle"
                                     />
                                 </form>
 
                             </div>
                         </div>
                     </TabPanel>
-                    <TabPanel>dşlaskdşl</TabPanel>
+                    <TabPanel>
+                        <div className="profile-info">
+                            <div id="login">
+                                <form onSubmit={this.uploadPic}>
+                                    <input
+                                        type="file"
+                                        id="filePic"
+                                        name="filePic"
+                                        required
+                                    />
+                                    <input
+                                        type="submit"
+                                        className="login-sbmt"
+                                        value="Güncelle"
+                                    />
+                                </form>
+
+                            </div>
+                        </div>
+                    </TabPanel>
 
                 </Tabs>
                 <NotificationSystem ref="notificationSystem" />

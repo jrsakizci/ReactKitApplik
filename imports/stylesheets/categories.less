@@ -1,0 +1,69 @@
+@import "./main.less";
+
+.categories-container {
+    width:100%;
+    .books-container {
+        width:100%;
+        @media (min-width:1024px) {
+            width: 49%;
+            float: left;
+        }
+        .books-title {
+            width: 100%;
+            background: #0e979e;
+            color: #fff;
+            font-size: 18px;
+            text-transform: uppercase;
+            text-align: center;
+            height: 50px;
+            .border-radius(5px);
+            line-height: 50px;
+            i {
+                background: #057075;
+                padding: 6px;
+                border-radius: 100%;
+            }
+        }
+        .cat-item {
+            background: #ececec;
+            margin: 5px 0px;
+            text-indent: 20px;
+            border-radius: 5px;
+            height: 40px;
+            line-height: 40px;
+            cursor:pointer;
+        }
+    }
+    .documents-container {
+        width:100%;
+         @media (min-width:1024px) {
+            width: 49%;
+            float: right;
+        }
+        .documents-title {
+            width: 100%;
+            background: rgb(232, 137, 36);
+            color: #fff;
+            font-size: 18px;
+            text-transform: uppercase;
+            text-align: center;
+            height: 50px;
+            .border-radius(5px);
+            line-height: 50px;
+            i {
+                background: #b35c00;
+                padding: 6px;
+                border-radius: 100%;
+            }
+        }
+        .doc-item {
+            background: #ececec;
+            margin: 5px 0px;
+            text-indent: 20px;
+            border-radius: 5px;
+            height: 40px;
+            line-height: 40px;
+            cursor:pointer;
+        }
+    }
+}
