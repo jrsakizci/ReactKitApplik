@@ -5,24 +5,22 @@ import NotificationSystem from 'react-notification-system';
 import 'react-widgets/lib/less/react-widgets.less';
 import categories from '../categories.json';
 import Multiselect from 'react-widgets/lib/Multiselect';
-
+import { Slingshot } from 'meteor/edgee:slingshot';
 
 export default class NewItem extends Component {
     constructor(props) {
         super(props);
         this.state = {
             longitude: 0,
-            latitude: 0
+            latitude: 0,
+            categories: '',
+            contentPic: ''
         };
+        this.handleInputChange = this.handleInputChange.bind(this);
         this.submitContent = this.submitContent.bind(this);
     }
     componentWillMount() {
-        this.placeholder = {
-            username: 'kullanıcı adı',
-            password: 'şifre',
-            latitude: 0,
-            longitude: 0
-        };
+
     }
     componentDidMount() {
         this._notificationSystem = this.refs.notificationSystem;
@@ -34,7 +32,6 @@ export default class NewItem extends Component {
             });
         }
         geolocation.getCurrentPosition((position) => {
-            console.log(position);
             this.setState({
                 longitude: position.coords.longitude,
                 latitude: position.coords.latitude
@@ -46,9 +43,54 @@ export default class NewItem extends Component {
             });
         });
     }
+    handleInputChange(event) {
+        const value = event.target.value;
+        const name = event.target.name;
+
+        this.setState({
+            [name]: value
+        });
+    }
     submitContent(event) {
         event.preventDefault();
-        console.log(this.state);
+        const uploader = new Slingshot.Upload('bookPic');
+        // FIRST UPLOAD IMAGE..
+        uploader.send(document.getElementById('filePic').files[0], (error, downloadUrl) => {
+            if (error) {
+                this._notificationSystem.addNotification({
+                    message: uploader.xhr.response,
+                    level: 'error'
+                });
+            }
+            else {
+                this.setState({
+                    contentPic: downloadUrl
+                });
+                // ON SUCCESSFUL ADD ITEM TO DATABASE
+                Meteor.call('addNewContent',
+                    this.state.document_name,
+                    this.state.document_description,
+                    this.state.categories,
+                    this.state.latitude,
+                    this.state.longitude,
+                    this.state.contentPic,
+                    (err) => {
+                        if (err) {
+                            this._notificationSystem.addNotification({
+                                message: 'İçeriğinizi eklerken bir sorunla karşılaştık.',
+                                level: 'error'
+                            });
+                        } else {
+                            this._notificationSystem.addNotification({
+                                message: 'İçerik başarıyla oluşturuldu!',
+                                level: 'success'
+                            });
+                        }
+                    });
+            }
+        });
+
+
     }
     render() {
         const options = [];
@@ -66,6 +108,7 @@ export default class NewItem extends Component {
                         placeholder="Döküman Adı"
                         id="document_name"
                         name="document_name"
+                        onChange={this.handleInputChange}
                         required
                     />
                     <input
@@ -73,12 +116,14 @@ export default class NewItem extends Component {
                         placeholder="Kitap/Döküman ne hakkında? Ne kadar eski? vb.."
                         id="document_description"
                         name="document_description"
+                        onChange={this.handleInputChange}
                         required
                     />
                     <Multiselect
                         data={options}
                         valueField='id'
                         textField='name'
+                        onChange={value => this.setState({ categories: value })}
                     />
                     <input
                         type="file"
@@ -92,7 +137,7 @@ export default class NewItem extends Component {
                         value="Gönder"
                     />
                 </form>
-            <NotificationSystem ref="notificationSystem" />
+                <NotificationSystem ref="notificationSystem" />
             </div>
         );
     }

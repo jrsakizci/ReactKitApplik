@@ -46,6 +46,10 @@ const routes = [{
       path: '/icerik-ekle',
       component: newItem,
       onEnter: isUserLoggedIn
+    },
+    {
+      path: '/icerik/:id',
+      component: ListItems
     }, {
       path: '/profil',
       component: ProfileContainer,

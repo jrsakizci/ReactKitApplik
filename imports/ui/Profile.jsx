@@ -28,7 +28,6 @@ export default class Profile extends Component {
             newPassword: 'yeni şifreniz',
             oldPassword: 'eski şifreniz'
         }
-
     }
     componentDidMount() {
         this._notificationSystem = this.refs.notificationSystem;
@@ -102,29 +101,40 @@ export default class Profile extends Component {
     }
     uploadPic(event) {
         event.preventDefault();
-        const uploader = new Slingshot.Upload('myFileUploads');
-        uploader.send(document.getElementById('filePic').files[0], (error, downloadUrl) => {
-            if (error) {
-                this._notificationSystem.addNotification({
-                    message: uploader.xhr.response,
-                    level: 'error'
-                });
-            }
-            else {
-                try {
-                    Meteor.users.update(Meteor.userId(), { $set: { 'profile.profilePic': downloadUrl } });
-                }
-                catch (err) {
+        try {
+            const uploader = new Slingshot.Upload('profilePic');
+            uploader.send(document.getElementById('filePic').files[0], (error, downloadUrl) => {
+                if (error) {
                     this._notificationSystem.addNotification({
-                        message: 'Resmi veritabanına kaydederken bi hata oluştu lütfen sonra tekrar deneyiniz.',
+                        message: uploader.xhr.response,
                         level: 'error'
                     });
                 }
-            }
+                else {
+                    try {
+                        Meteor.users.update(Meteor.userId(), { $set: { 'profile.profilePic': downloadUrl } });
+                    }
+                    catch (err) {
+                        this._notificationSystem.addNotification({
+                            message: 'Resmi veritabanına kaydederken bi hata oluştu lütfen sonra tekrar deneyiniz.',
+                            level: 'error'
+                        });
+                    }
+                }
             });
+        this._notificationSystem.addNotification({
+                message: 'Resminiz kaydedildi.',
+                level: 'success'
+        });
+        } catch (err) {
+            throw err;
+        }
+
     }
     render() {
+        console.log(this.props.user.username);
         return (
+            
             <div>
                 <Tabs>
                     <TabList>
@@ -215,6 +225,7 @@ export default class Profile extends Component {
                     <TabPanel>
                         <div className="profile-info">
                             <div id="login">
+                                <p>En fazla 1MB ve 500x500 resim kullanabilirsiniz.</p>
                                 <form onSubmit={this.uploadPic}>
                                     <input
                                         type="file"
