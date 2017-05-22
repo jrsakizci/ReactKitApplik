@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.51.0",
+    "axios": "^0.16.1",
     "babel-runtime": "^6.20.0",
     "bcrypt": "^1.0.2",
     "classnames": "^2.2.5",
@@ -17,6 +18,7 @@
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.5.2",
     "react-addons-pure-render-mixin": "^15.5.2",
+    "react-axios": "0.0.9",
     "react-cookie": "^2.0.6",
     "react-dom": "^15.4.2",
     "react-geolocated": "^1.0.3",

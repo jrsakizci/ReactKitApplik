@@ -11,7 +11,7 @@ import Home from './Home';
 import Register from './auth/Register';
 import Login from './auth/Login';
 import newItem from './NewItem';
-import Profile from './Profile';
+import SingleItemConteiner from './SingleItemContainer';
 import ProfileContainer from './ProfileContainer';
 import Categories from './Categories';
 import '../stylesheets/main.less';
@@ -49,7 +49,7 @@ const routes = [{
     },
     {
       path: '/icerik/:id',
-      component: ListItems
+      component: SingleItemConteiner
     }, {
       path: '/profil',
       component: ProfileContainer,

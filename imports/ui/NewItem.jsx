@@ -58,7 +58,7 @@ export default class NewItem extends Component {
         uploader.send(document.getElementById('filePic').files[0], (error, downloadUrl) => {
             if (error) {
                 this._notificationSystem.addNotification({
-                    message: uploader.xhr.response,
+                    message: error.message,
                     level: 'error'
                 });
             }
@@ -82,11 +82,14 @@ export default class NewItem extends Component {
                             });
                         } else {
                             this._notificationSystem.addNotification({
-                                message: 'İçerik başarıyla oluşturuldu!',
+                                message: 'İçerik başarıyla oluşturuldu! Yönlendiriliyorsunuz..',
                                 level: 'success'
                             });
+                            setTimeout(() => {
+
+                            }, 1000);
                         }
-                    });
+                });
             }
         });
 

@@ -1,10 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
-import { Mongo } from 'meteor/mongo';
-
-const Content = new Mongo.Collection('content');
+import { Content } from '../both/collections';
 
 if (Meteor.isServer) {
+    Meteor.publish('getSingleItem', () => {
+        return Content.find();
+    });
     Meteor.methods({
        addNewContent: (name, descr, categories, longi, lati, picsUrl) => {
            try {
@@ -18,8 +19,7 @@ if (Meteor.isServer) {
                     isVisible: 0,
                     user: Meteor.userId()
                 });
-           }
-           catch (err) {
+           } catch (err) {
                throw err;
            }
        }

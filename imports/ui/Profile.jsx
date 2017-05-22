@@ -19,6 +19,7 @@ export default class Profile extends Component {
         this.changeUsername = this.changeUsername.bind(this);
         this.changeEmail = this.changeEmail.bind(this);
         this.changePassword = this.changePassword.bind(this);
+        this.uploadPic = this.uploadPic.bind(this);
     }
 
     componentWillMount() {
@@ -106,13 +107,17 @@ export default class Profile extends Component {
             uploader.send(document.getElementById('filePic').files[0], (error, downloadUrl) => {
                 if (error) {
                     this._notificationSystem.addNotification({
-                        message: uploader.xhr.response,
+                        message: error.message,
                         level: 'error'
                     });
                 }
                 else {
                     try {
                         Meteor.users.update(Meteor.userId(), { $set: { 'profile.profilePic': downloadUrl } });
+                        this._notificationSystem.addNotification({
+                            message: 'Resminiz kaydedildi.',
+                            level: 'success'
+                        });
                     }
                     catch (err) {
                         this._notificationSystem.addNotification({
@@ -122,19 +127,21 @@ export default class Profile extends Component {
                     }
                 }
             });
-        this._notificationSystem.addNotification({
-                message: 'Resminiz kaydedildi.',
-                level: 'success'
-        });
+
         } catch (err) {
             throw err;
         }
 
     }
+    getProfilePic() {
+        return this.props.user.profile ? <img role='presentation' src={this.props.user.profile.profilePic} /> : null;
+    }
+    getEmailAddress() {
+        return this.props.user.profile ? <p className="info">Kayıtlı Emailiniz: <strong> {this.props.user.emails[0].address} </strong></p> : null;
+    }
     render() {
-        console.log(this.props.user.username);
         return (
-            
+
             <div>
                 <Tabs>
                     <TabList>
@@ -147,6 +154,7 @@ export default class Profile extends Component {
                     <TabPanel>
                         <div className="profile-info">
                             <div id="login">
+                                <p className="info">Kayıtlı Kullanıcı Adınız: <strong> {this.props.user.username} </strong></p>
                                 <form onSubmit={this.changeUsername}>
                                     <input
                                         type="text"
@@ -170,6 +178,7 @@ export default class Profile extends Component {
                     <TabPanel>
                         <div className="profile-info">
                             <div id="login">
+                                {this.getEmailAddress()}
                                 <form onSubmit={this.changeEmail}>
                                     <input
                                         type="text"
@@ -225,6 +234,7 @@ export default class Profile extends Component {
                     <TabPanel>
                         <div className="profile-info">
                             <div id="login">
+                                {this.getProfilePic()}
                                 <p>En fazla 1MB ve 500x500 resim kullanabilirsiniz.</p>
                                 <form onSubmit={this.uploadPic}>
                                     <input
@@ -247,6 +257,7 @@ export default class Profile extends Component {
                 </Tabs>
                 <NotificationSystem ref="notificationSystem" />
             </div>
+
         );
     }
 }
