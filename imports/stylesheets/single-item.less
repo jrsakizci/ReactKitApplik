@@ -1,0 +1,33 @@
+
+#single-item {
+    background: rgba(202, 202, 202, 0.18);
+    min-height: 450px;
+    @media (min-width:1024px) {
+    width: 70%;
+    margin: 0 auto;
+    }
+    .item-img-container {
+        img {
+            width: 88%;
+            height: 440px;
+            padding: 5px;
+        }
+        @media (min-width:1024px) {
+             float:left;
+             width:20%;
+        }
+    }
+    .item-content-container {
+        .content-name {
+            font-size: 25px;
+            font-weight: bold;
+            color: #4c4c4c;
+            border-bottom: 1px solid #d8d8d8;
+            margin: 0px 0px 10px 0px;
+        }
+        @media (min-width:1024px) {
+            float:right;
+            width:80%;
+        }
+    }
+}

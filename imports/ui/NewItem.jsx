@@ -6,6 +6,7 @@ import 'react-widgets/lib/less/react-widgets.less';
 import categories from '../categories.json';
 import Multiselect from 'react-widgets/lib/Multiselect';
 import { Slingshot } from 'meteor/edgee:slingshot';
+import { Content } from '../../both/collections';
 
 export default class NewItem extends Component {
     constructor(props) {
@@ -53,6 +54,7 @@ export default class NewItem extends Component {
     }
     submitContent(event) {
         event.preventDefault();
+        Meteor.subscribe('getSingleItem');
         const uploader = new Slingshot.Upload('bookPic');
         // FIRST UPLOAD IMAGE..
         uploader.send(document.getElementById('filePic').files[0], (error, downloadUrl) => {
@@ -85,15 +87,16 @@ export default class NewItem extends Component {
                                 message: 'İçerik başarıyla oluşturuldu! Yönlendiriliyorsunuz..',
                                 level: 'success'
                             });
+                            const item = Content.find({ content_name: this.state.document_name, content_desc: this.state.document_description }).fetch();
                             setTimeout(() => {
-
+                                if (item.length > 0) {
+                                    browserHistory.push('/icerik/' + item[0]._id);
+                                } 
                             }, 1000);
                         }
-                });
+                    });
             }
         });
-
-
     }
     render() {
         const options = [];

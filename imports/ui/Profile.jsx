@@ -149,6 +149,7 @@ export default class Profile extends Component {
                         <Tab>Email Düzenle</Tab>
                         <Tab>Şifre Düzenle</Tab>
                         <Tab>Profil Resmi Düzenle</Tab>
+                        <Tab>Kitap / Dökümanlarım</Tab>
                     </TabList>
 
                     <TabPanel>
@@ -253,7 +254,9 @@ export default class Profile extends Component {
                             </div>
                         </div>
                     </TabPanel>
-
+                    <TabPanel>
+                        
+                    </TabPanel>
                 </Tabs>
                 <NotificationSystem ref="notificationSystem" />
             </div>
