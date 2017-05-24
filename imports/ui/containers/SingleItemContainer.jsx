@@ -9,7 +9,7 @@ export default SingleItemContainer = createContainer((props) => {
   Meteor.subscribe('getSingleItem');
 
   const singleItem = Content.find({ _id: props.routeParams.id }).fetch();
-  console.log(userInfo);
+
   return {
     user: Meteor.user() || {},
     getSingleItem: singleItem || false
