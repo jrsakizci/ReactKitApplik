@@ -77,7 +77,7 @@ export default class Login extends Component {
                         value="Giriş Yap"
                     />
                 </form>
-                 <Link to="/register"><div className="register-text">Bir hesabın yok mu? <span className="register-link">Hesap Oluştur!</span></div></Link>
+                 <Link to="/kayit-ol"><div className="register-text">Bir hesabın yok mu? <span className="register-link">Hesap Oluştur!</span></div></Link>
                 <NotificationSystem ref="notificationSystem" />
             </div>
         )

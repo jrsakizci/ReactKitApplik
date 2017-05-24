@@ -5,7 +5,7 @@ import NotificationSystem from 'react-notification-system';
 import categories from '../categories.json';
 import '../stylesheets/categories.less';
 
-export default class NewItem extends Component {
+export default class Categories extends Component {
     constructor(props) {
         super(props);
     }

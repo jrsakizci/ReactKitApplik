@@ -9,7 +9,6 @@ export default SingleItemContainer = createContainer((props) => {
   Meteor.subscribe('getSingleItem');
 
   const singleItem = Content.find({ _id: props.routeParams.id }).fetch();
-  const userInfo = Meteor.users.findOne({ _id: props.id });
   console.log(userInfo);
   return {
     user: Meteor.user() || {},

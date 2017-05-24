@@ -34,30 +34,30 @@ const routes = [{
   component: Home,
   onEnter: isUserLoggedIn,
 },
-    {
-      path: '/giris-yap',
-      component: Login,
-      onEnter: isUserNotLoggedIn
-    }, {
-      path: '/kayit-ol',
-      component: Register,
-      onEnter: isUserNotLoggedIn
-    }, {
-      path: '/icerik-ekle',
-      component: newItem,
-      onEnter: isUserLoggedIn
-    },
-    {
-      path: '/icerik/:id',
-      component: SingleItemConteiner
-    }, {
-      path: '/profil',
-      component: ProfileContainer,
-      onEnter: isUserLoggedIn
-    }, {
-      path: '/kategoriler',
-      component: Categories
-    }
+{
+  path: '/giris-yap',
+  component: Login,
+  onEnter: isUserNotLoggedIn
+}, {
+  path: '/kayit-ol',
+  component: Register,
+  onEnter: isUserNotLoggedIn
+}, {
+  path: '/icerik-ekle',
+  component: newItem,
+  onEnter: isUserLoggedIn
+},
+{
+  path: '/icerik/:id',
+  component: SingleItemConteiner
+}, {
+  path: '/profil',
+  component: ProfileContainer,
+  onEnter: isUserLoggedIn
+}, {
+  path: '/kategoriler',
+  component: Categories
+}
 ];
 
 export default class Routes extends React.Component {
@@ -80,7 +80,7 @@ export default class Routes extends React.Component {
     });
     Meteor.logout();
     setTimeout(() => {
-      browserHistory.push('login');
+      browserHistory.push('giris-yap');
     }, 1500);
   }
   goRoute(param) {
