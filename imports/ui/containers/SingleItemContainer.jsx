@@ -8,7 +8,7 @@ import '../../../both/publications';
 export default SingleItemContainer = createContainer((props) => {
   Meteor.subscribe('getSingleItem');
 
-  const singleItem = Content.find({ _id: props.routeParams.id }).fetch();
+  const singleItem = Content.findOne({ _id: props.routeParams.id });
 
   return {
     user: Meteor.user() || {},

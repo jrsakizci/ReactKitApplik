@@ -43,6 +43,11 @@ export default class ListItems extends Component {
                 });
         }
     }
+    getCategories() {
+        if (this.props.getSingleItem.length > 0) {
+            return this.props.getSingleItem[0].content_cats ? this.props.getSingleItem[0].content_cats : null;
+        }
+    }
     getUserData() {
          if (this.props.getSingleItem.length > 0) {
             return this.props.getSingleItem[0].user ? this.props.getSingleItem[0].user : null;
@@ -59,7 +64,7 @@ export default class ListItems extends Component {
                     <div className="content-description">{this.getItemDescription()}</div>
                 </div>
                 <div className="item-info">
-                    <GetItemUserInfoContainer id={this.getUserData()} />
+                    <GetItemUserInfoContainer id={this.getUserData()} location={this.state.location} categories={this.getCategories()} />
                 </div>
             </div>
         );

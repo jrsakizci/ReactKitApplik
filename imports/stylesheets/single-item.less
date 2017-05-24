@@ -1,10 +1,13 @@
 
 #single-item {
-    background: rgba(202, 202, 202, 0.18);
+    background: rgb(241, 241, 241);
     min-height: 450px;
+    padding: 10px;
+    border-radius: 5px;
     @media (min-width:1024px) {
     width: 70%;
     margin: 0 auto;
+    position:relative;
     }
     .item-img-container {
         img {
@@ -28,6 +31,34 @@
         @media (min-width:1024px) {
             float:right;
             width:80%;
+        }
+    }
+    .item-info {
+           background: #e2e2e2;
+            min-height: 50px;
+            line-height: 50px;
+            text-indent: 10px;
+        .item-info-container {
+            .item-info-col {
+                width:100%;
+                @media (min-width:1024px) {
+                    width:25%;
+                    float:left;
+                }
+                .item-message-button {
+                    width:100%;
+                    text-align:center;
+                    float:right;
+                    background: #0069ea;
+                    color: #fff;
+                }
+            }
+        }
+        @media (min-width:1024px) {
+             position: absolute;
+            bottom: 0px;
+            width: 80%;
+            left: 20%;
         }
     }
 }
