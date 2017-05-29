@@ -7,6 +7,8 @@ import categories from '../categories.json';
 import Multiselect from 'react-widgets/lib/Multiselect';
 import { Slingshot } from 'meteor/edgee:slingshot';
 import { Content } from '../../both/collections';
+import Loader from './Loader';
+import moment from 'moment';
 
 export default class NewItem extends Component {
     constructor(props) {
@@ -15,16 +17,22 @@ export default class NewItem extends Component {
             longitude: 0,
             latitude: 0,
             categories: '',
-            contentPic: ''
+            contentPic: '',
+            loader: true
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.submitContent = this.submitContent.bind(this);
+        this.renderLoader = this.renderLoader.bind(this);
     }
     componentWillMount() {
 
     }
     componentDidMount() {
+        console.log(moment().format());
         this._notificationSystem = this.refs.notificationSystem;
+        this.setState({
+            loader: false
+        });
         const geolocation = navigator.geolocation;
         if (!geolocation) {
             this._notificationSystem.addNotification({
@@ -44,6 +52,7 @@ export default class NewItem extends Component {
             });
         });
     }
+
     handleInputChange(event) {
         const value = event.target.value;
         const name = event.target.name;
@@ -55,6 +64,9 @@ export default class NewItem extends Component {
     submitContent(event) {
         event.preventDefault();
         Meteor.subscribe('getSingleItem');
+        this.setState({
+            loader: true
+        });
         const uploader = new Slingshot.Upload('bookPic');
         // FIRST UPLOAD IMAGE..
         uploader.send(document.getElementById('filePic').files[0], (error, downloadUrl) => {
@@ -62,6 +74,9 @@ export default class NewItem extends Component {
                 this._notificationSystem.addNotification({
                     message: error.message,
                     level: 'error'
+                });
+                this.setState({
+                    loader: false
                 });
             }
             else {
@@ -76,27 +91,37 @@ export default class NewItem extends Component {
                     this.state.latitude,
                     this.state.longitude,
                     this.state.contentPic,
+                    moment().format(),
                     (err) => {
                         if (err) {
                             this._notificationSystem.addNotification({
                                 message: 'İçeriğinizi eklerken bir sorunla karşılaştık.',
                                 level: 'error'
                             });
+                            this.setState({
+                                loader: false
+                            });
                         } else {
                             this._notificationSystem.addNotification({
                                 message: 'İçerik başarıyla oluşturuldu! Yönlendiriliyorsunuz..',
                                 level: 'success'
                             });
+                            this.setState({
+                                loader: false
+                            });
                             const item = Content.find({ content_name: this.state.document_name, content_desc: this.state.document_description }).fetch();
                             setTimeout(() => {
                                 if (item.length > 0) {
                                     browserHistory.push('/icerik/' + item[0]._id);
-                                } 
+                                }
                             }, 1000);
                         }
                     });
             }
         });
+    }
+    renderLoader() {
+        return <Loader show={this.state.loader} />;
     }
     render() {
         const options = [];
@@ -117,10 +142,11 @@ export default class NewItem extends Component {
                         onChange={this.handleInputChange}
                         required
                     />
-                    <input
-                        type="text"
+                    <textarea
+                        rows="10"
                         placeholder="Kitap/Döküman ne hakkında? Ne kadar eski? vb.."
                         id="document_description"
+                        className="document_description"
                         name="document_description"
                         onChange={this.handleInputChange}
                         required
@@ -144,6 +170,7 @@ export default class NewItem extends Component {
                     />
                 </form>
                 <NotificationSystem ref="notificationSystem" />
+                {this.renderLoader()}
             </div>
         );
     }

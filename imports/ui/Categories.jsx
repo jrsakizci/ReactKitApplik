@@ -4,10 +4,23 @@ import { browserHistory } from 'react-router';
 import NotificationSystem from 'react-notification-system';
 import categories from '../categories.json';
 import '../stylesheets/categories.less';
+import Loader from './Loader';
 
 export default class Categories extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            loader: true,
+        };
+        this.renderLoader = this.renderLoader.bind(this);
+    }
+    componentDidMount() {
+        this.setState({
+            loader: false
+        });
+    }
+    renderLoader() {
+        return <Loader show={this.state.loader} />;
     }
     render() {
         const listBooks = categories.books.map((book) =>
@@ -26,6 +39,7 @@ export default class Categories extends Component {
                 <div className="documents-title"> <i className="fa fa-file-text-o" aria-hidden="true" /> Döküman Kategorileri</div> 
                 {listDocs}   
             </div>
+             {this.renderLoader()}
             </div>
         );
     }

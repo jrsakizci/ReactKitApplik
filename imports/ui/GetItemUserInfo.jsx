@@ -10,7 +10,7 @@ export default class GetItemUserInfo extends Component {
     getCategories() {
         if (this.props.categories) {
             return this.props.categories.map((cat) =>
-                <span key={cat.id}>{cat.name}</span>
+                <span key={cat.id}>{cat.name} </span>
             );
         }
     }

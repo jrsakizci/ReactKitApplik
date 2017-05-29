@@ -16,7 +16,6 @@ import ProfileContainer from './containers/ProfileContainer';
 import Categories from './Categories';
 import '../stylesheets/main.less';
 import NotificationSystem from 'react-notification-system';
-
 /* Routes and authentication */
 function isUserLoggedIn() {
   if (!Meteor.userId()) {
@@ -57,6 +56,9 @@ const routes = [{
 }, {
   path: '/kategoriler',
   component: Categories
+}, {
+  path: '*',
+  component: Home
 }
 ];
 
@@ -65,6 +67,7 @@ export default class Routes extends React.Component {
     super(props);
     this.state = {
       showHideMenu: 'hide',
+      showSearchMenu: 'hide'
     };
   }
   componentDidMount() {
@@ -72,6 +75,9 @@ export default class Routes extends React.Component {
   }
   toggleMobileMenu() {
     this.setState({ showHideMenu: !this.state.showHideMenu });
+  }
+  toggleSearchCats() {
+    this.setState({ showSearchMenu: !this.state.showSearchMenu });
   }
   logOut() {
     this._notificationSystem.addNotification({
@@ -94,27 +100,66 @@ export default class Routes extends React.Component {
     let profileLink = null;
 
     if (this.props.user.username) {
-      loginButton = <a onClick={this.logOut.bind(this)}>Çıkış Yap</a>;
+      loginButton = <a onClick={this.logOut.bind(this)}><i className="fa fa-sign-out" aria-hidden="true" /> Çıkış Yap</a>;
       bookLink = <li onClick={() => this.goRoute('/icerik-ekle')}><i className="fa fa-plus header-icon" aria-hidden="true" /> İçerik Ekle</li>;
       profileLink = <li onClick={() => this.goRoute('/profil')}><a><i className="fa fa-user header-icon" aria-hidden="true" /> Profil</a></li>;
     } else {
-      loginButton = <a onClick={() => this.goRoute('/giris-yap')}> Giriş Yap / Üye Ol </a>;
+      loginButton = <a onClick={() => this.goRoute('/giris-yap')}> <i className="fa fa-sign-in" aria-hidden="true" /> Giriş Yap / Üye Ol </a>;
       bookLink = null;
       profileLink = null;
     }
     return (
       <div id="element">
-        <div id="sidebar">
-          <div className="fl left-side">
+        <div id="header">
+          <div className="header-top">
+            <div>
+              <ul className="social-networks">
+                <li>
+                  <i className="fa fa-facebook"></i>
+                </li>
+                <li>
+                  <i className="fa fa-twitter"></i>
+                </li>
+                <li>
+                  <i className="fa fa-instagram"></i>
+                </li>
+              </ul>
+            </div>
+            <div className="login-area">
+              {loginButton}
+            </div>
+            <div className="cf" />
+          </div>
+          <div className="logo-area">
             <div id="logo">
               <img src="http://4.bp.blogspot.com/-WbHYU-bG5ho/VNP2k-lVjBI/AAAAAAAABWA/zBCShgPtYMQ/s1600/new-logo.png" alt="" />
             </div>
           </div>
-          <div className="fr right-side">
-            <div id="login-top">
-              {loginButton}
+          <div className="search-area">
+            <div className="search-container">
+              <div className="searchSubjectContainer" onClick={this.toggleSearchCats.bind(this)}>
+                  Hepsi <i className="fa fa-sort" />
+              </div>
+              <div id="searchCategoriesList" className={this.state.showSearchMenu ? 'hide' : 'show'}>
+                <ul> 
+                  <li>Döküman</li>
+                  <li>Kitap</li>
+                </ul>
+              </div>
+                <input type="text" placeholder="Arama yap.." />
             </div>
           </div>
+          <div className="nav-area">
+            <div className="header-links">
+              <div className="message">
+                <i className="fa fa-comment-o" />
+                <div className="messageNotificationNumber">1</div>
+              </div>
+            </div>
+          </div>
+          <div className="cf" />
+        </div>
+        <div id="sidebar">
           <div id="menu">
             <ul>
               <li onClick={() => this.goRoute('/')}>
@@ -124,10 +169,6 @@ export default class Routes extends React.Component {
               <li onClick={() => this.goRoute('/kategoriler')}>
                 <a>
                   <i className="fa fa-book header-icon" aria-hidden="true" /> Kategoriler</a>
-              </li>
-              <li>
-                <a>
-                  <i className="fa fa-search header-icon" aria-hidden="true" /> Arama</a>
               </li>
               {bookLink}
               {profileLink}
@@ -146,20 +187,15 @@ export default class Routes extends React.Component {
                 <i className="fa fa-book header-icon" aria-hidden="true" />
                 <a href="#"> Kategoriler</a>
               </li>
-              <li>
-                <i className="fa fa-search header-icon" aria-hidden="true" />
-                <a href="#"> Arama</a>
-              </li>
               <Link to="/add-item">{bookLink}</Link>
               {profileLink}
             </ul>
           </div>
 
         </div>
-        <div className="cf" />
         <div id="content">
           <Router history={browserHistory} routes={routes}>
-
+            
           </Router>
         </div>
         <NotificationSystem ref="notificationSystem" />

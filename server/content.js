@@ -7,17 +7,20 @@ if (Meteor.isServer) {
         return Content.find();
     });
     Meteor.methods({
-       addNewContent: (name, descr, categories, longi, lati, picsUrl) => {
+       addNewContent: (name, descr, categories, longi, lati, picsUrl, dateTime) => {
            try {
                 Content.insert({
                     content_name: name,
                     content_desc: descr,
                     content_cats: categories,
-                    long: longi,
-                    lat: lati,
+                    loc: {
+                        x: longi,
+                        y: lati
+                    },
                     picUrl: picsUrl,
                     isVisible: 0,
-                    user: Meteor.userId()
+                    user: Meteor.userId(),
+                    date: dateTime
                 });
            } catch (err) {
                throw err;

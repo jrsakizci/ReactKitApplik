@@ -5,6 +5,7 @@ import '../stylesheets/profile.less';
 import NotificationSystem from 'react-notification-system';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Slingshot } from 'meteor/edgee:slingshot';
+import Loader from './Loader';
 
 export default class Profile extends Component {
     constructor(props) {
@@ -13,13 +14,15 @@ export default class Profile extends Component {
             username: 'kullanıcı adı',
             email: 'email',
             oldPassword: 'eski şifre',
-            newPassword: 'yeni şifre'
+            newPassword: 'yeni şifre',
+            loader: true
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.changeUsername = this.changeUsername.bind(this);
         this.changeEmail = this.changeEmail.bind(this);
         this.changePassword = this.changePassword.bind(this);
         this.uploadPic = this.uploadPic.bind(this);
+        this.renderLoader = this.renderLoader.bind(this);
     }
 
     componentWillMount() {
@@ -28,11 +31,22 @@ export default class Profile extends Component {
             email: 'yeni email',
             newPassword: 'yeni şifreniz',
             oldPassword: 'eski şifreniz'
-        }
+        };
     }
+
     componentDidMount() {
         this._notificationSystem = this.refs.notificationSystem;
+        this.setState({
+            loader: false
+        });
     }
+    componentWillReceiveProps() {
+
+    }
+    renderLoader() {
+        return <Loader show={this.state.loader} />;
+    }
+
     handleInputChange(event) {
         const value = event.target.value;
         const name = event.target.name;
@@ -43,12 +57,15 @@ export default class Profile extends Component {
     }
     changeUsername(event) {
         event.preventDefault();
+        this.setState({
+            loader: true
+        });
         Meteor.call('changeUsername',
             this.state.username,
             (error) => {
                 if (error) {
                     this._notificationSystem.addNotification({
-                        message: 'Kullanıcı adı değiştirilirken bir sorunla karşılaşıldı.',
+                        message: 'Kullanıcı adı değiştirilirken bir sorunla karşılaşıldı. Aynı kullanıcı adı kullanılıyor olabilir.',
                         level: 'error'
                     });
                 } else {
@@ -57,16 +74,22 @@ export default class Profile extends Component {
                         level: 'success'
                     });
                 }
+                this.setState({
+                    loader: false
+                });
             });
     }
     changeEmail(event) {
         event.preventDefault();
+        this.setState({
+            loader: true
+        });
         Meteor.call('changeEmail',
             this.state.email,
             (error) => {
                 if (error) {
                     this._notificationSystem.addNotification({
-                        message: 'Email değiştirilirken bir sorunla karşılaşıldı.',
+                        message: 'Email değiştirilirken bir sorunla karşılaşıldı. Aynı email kullanılıyor olabilir.',
                         level: 'error'
                     });
                 } else {
@@ -75,25 +98,41 @@ export default class Profile extends Component {
                         level: 'success'
                     });
                 }
+                this.setState({
+                    loader: false
+                });
             });
     }
     changePassword(event) {
         event.preventDefault();
+        this.setState({
+            loader: true
+        });
         if (this.state.oldPassword === this.state.newPassword) {
             this._notificationSystem.addNotification({
                 message: 'Yeni şifreniz eskisiyle aynı olamaz.',
                 level: 'error'
             });
+            this.setState({
+                loader: false
+            });
             return;
         }
         try {
             Accounts.changePassword(this.state.oldPassword, this.state.newPassword);
+            this.setState({
+                loader: false
+            });
             this._notificationSystem.addNotification({
                 message: 'Şifreniz başarıyla değiştirildi.',
                 level: 'success'
             });
+
         }
         catch (err) {
+            this.setState({
+                loader: false
+            });
             this._notificationSystem.addNotification({
                 message: 'Şifreniz değiştirilirken bir sorunla karşılaşıldı.',
                 level: 'error'
@@ -102,6 +141,9 @@ export default class Profile extends Component {
     }
     uploadPic(event) {
         event.preventDefault();
+        this.setState({
+            loader: true
+        });
         try {
             const uploader = new Slingshot.Upload('profilePic');
             uploader.send(document.getElementById('filePic').files[0], (error, downloadUrl) => {
@@ -110,16 +152,26 @@ export default class Profile extends Component {
                         message: error.message,
                         level: 'error'
                     });
+                    this.setState({
+                        loader: false
+                    });
                 }
                 else {
                     try {
                         Meteor.users.update(Meteor.userId(), { $set: { 'profile.profilePic': downloadUrl } });
+                        this.setState({
+                            loader: false
+                        });
                         this._notificationSystem.addNotification({
                             message: 'Resminiz kaydedildi.',
                             level: 'success'
                         });
+
                     }
                     catch (err) {
+                        this.setState({
+                            loader: false
+                        });
                         this._notificationSystem.addNotification({
                             message: 'Resmi veritabanına kaydederken bi hata oluştu lütfen sonra tekrar deneyiniz.',
                             level: 'error'
@@ -129,6 +181,9 @@ export default class Profile extends Component {
             });
 
         } catch (err) {
+            this.setState({
+                loader: false
+            });
             throw err;
         }
 
@@ -255,10 +310,11 @@ export default class Profile extends Component {
                         </div>
                     </TabPanel>
                     <TabPanel>
-                        
+
                     </TabPanel>
                 </Tabs>
                 <NotificationSystem ref="notificationSystem" />
+                {this.renderLoader()}
             </div>
 
         );

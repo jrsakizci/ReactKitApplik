@@ -2,25 +2,41 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { browserHistory } from 'react-router';
 import NotificationSystem from 'react-notification-system';
-import { geolocated } from 'react-geolocated';
+import GetItemsContainer from './containers/GetItemsContainer';
 
-class Home extends Component {
+export default class Home extends Component {
   constructor(props) {
     super(props);
-    this.componentDidMount = this.componentDidMount.bind(this);
+    this.state = {
+      latitude: 0,
+      longitude: 0
+    };
   }
-  componentDidMount() {
-    console.log(this.props.coords);
+  componentWillMount() {
+    const geolocation = navigator.geolocation;
+        if (!geolocation) {
+            this._notificationSystem.addNotification({
+                level: 'error',
+                message: 'İnternet tarayıcınız lokasyonu desteklemiyor(!)'
+            }); 
+        }
+        geolocation.getCurrentPosition((position) => {
+            this.setState({
+                longitude: position.coords.longitude,
+                latitude: position.coords.latitude
+            });
+        }, () => {
+            this._notificationSystem.addNotification({
+                level: 'error',
+                message: 'Lokasyonunuzu tespit edemedik.'
+            });
+        });
   }
   render() {
     return (
-      <span>Home</span>
+        <div id="homeItems">
+            <GetItemsContainer latitude={this.state.latitude} longitude={this.state.longitude} />
+        </div>
     );
   }
 }
-export default geolocated({
-  positionOptions: {
-    enableHighAccuracy: false,
-  },
-  userDecisionTimeout: 5000
-})(Home);
