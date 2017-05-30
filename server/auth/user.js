@@ -2,13 +2,18 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 
 if (Meteor.isServer) {
-
+    Accounts.onCreateUser((options, user) => {
+        Meteor.setTimeout(function () {
+            Accounts.sendVerificationEmail(user._id);
+        }, 2 * 1000);
+        return user;
+    });
     Meteor.methods({
         newUser: (uname, emailn, passwordn) => {
             try {
                 const findRegisteredUser = Meteor.users.findOne({ email: emailn });
                 if (!findRegisteredUser) {
-                   Accounts.createUser({
+                    Accounts.createUser({
                         username: uname,
                         password: passwordn,
                         email: emailn,
@@ -17,7 +22,7 @@ if (Meteor.isServer) {
                 }
             }
             catch (err) {
-               throw err;
+                throw err;
             }
         },
         changeUsername: (uname) => {

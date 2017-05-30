@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { browserHistory } from 'react-router';
 import '../../stylesheets/register.less';
 import NotificationSystem from 'react-notification-system';
+import Loader from '../Loader';
 
 export default class Register extends Component {
     constructor(props) {
@@ -11,6 +12,7 @@ export default class Register extends Component {
             username: 'kullanıcı adı',
             email: 'email',
             password: 'şifre',
+            loader: false
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.submit = this.submit.bind(this);
@@ -35,26 +37,43 @@ export default class Register extends Component {
     }
     submit(event) {
         event.preventDefault();
+        this.setState({
+            loader: true
+        });
         Meteor.call('newUser',
             this.state.username,
             this.state.email,
             this.state.password,
             (error) => {
                 if (error) {
+                    this.setState({
+                        loader: false
+                    });
                     this._notificationSystem.addNotification({
                         message: 'Kayıt olurken bir hata oluştu!',
                         level: 'error'
                     });
                 } else {
+
+                    this.setState({
+                        loader: false
+                    });
                     this._notificationSystem.addNotification({
-                        message: 'Kaydınız başarıyla oluşturuldu. Giriş sayfasına yönlendiriliyorsunuz...',
+                        message: 'Başarıyla kaydoldunuz. Yönlendirileceksiniz.',
                         level: 'success'
-                    }); 
+                    });
+                    this._notificationSystem.addNotification({
+                        message: 'Lütfen email adresinizi kontrol edip üyeliğinizi onaylayın.',
+                        level: 'warning'
+                    });
                     setTimeout(() => {
-                        browserHistory.push('/login');
-                    }, 1500);
+                        browserHistory.push('/giris-yap');
+                    }, 3500);
                 }
             });
+    }
+    renderLoader() {
+        return <Loader show={this.state.loader} />;
     }
     render() {
         return (
@@ -91,6 +110,7 @@ export default class Register extends Component {
                     />
                 </form>
                 <NotificationSystem ref="notificationSystem" />
+                {this.renderLoader()}
             </div>
         );
     }
