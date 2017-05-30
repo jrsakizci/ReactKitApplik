@@ -112,6 +112,9 @@ export default class Routes extends React.Component {
       <div id="element">
         <div id="header">
           <div className="header-top">
+            <div className="login-area">
+              {loginButton}
+            </div>
             <div>
               <ul className="social-networks">
                 <li>
@@ -125,9 +128,7 @@ export default class Routes extends React.Component {
                 </li>
               </ul>
             </div>
-            <div className="login-area">
-              {loginButton}
-            </div>
+            
             <div className="cf" />
           </div>
           <div className="logo-area">

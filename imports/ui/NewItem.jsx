@@ -28,7 +28,6 @@ export default class NewItem extends Component {
 
     }
     componentDidMount() {
-        console.log(moment().format());
         this._notificationSystem = this.refs.notificationSystem;
         this.setState({
             loader: false
@@ -92,7 +91,7 @@ export default class NewItem extends Component {
                     this.state.longitude,
                     this.state.contentPic,
                     moment().format(),
-                    (err) => {
+                    (err, result) => {
                         if (err) {
                             this._notificationSystem.addNotification({
                                 message: 'İçeriğinizi eklerken bir sorunla karşılaştık.',
@@ -109,11 +108,8 @@ export default class NewItem extends Component {
                             this.setState({
                                 loader: false
                             });
-                            const item = Content.find({ content_name: this.state.document_name, content_desc: this.state.document_description }).fetch();
                             setTimeout(() => {
-                                if (item.length > 0) {
-                                    browserHistory.push('/icerik/' + item[0]._id);
-                                }
+                                 browserHistory.push('/icerik/' + result);
                             }, 1000);
                         }
                     });
@@ -148,6 +144,7 @@ export default class NewItem extends Component {
                         id="document_description"
                         className="document_description"
                         name="document_description"
+                        maxLength="500"
                         onChange={this.handleInputChange}
                         required
                     />

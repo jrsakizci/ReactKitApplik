@@ -17,7 +17,7 @@ export default class GetItems extends Component {
   render() {
     return (
         <div id="homeItems">
-            <span>Items</span>
+            
         </div>
     );
   }

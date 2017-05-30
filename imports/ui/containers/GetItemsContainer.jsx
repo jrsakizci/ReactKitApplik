@@ -8,8 +8,12 @@ import '../../../both/publications';
 
 export default GetItemsContainer = createContainer((props) => {
     Meteor.subscribe('getSingleItem');
-    const items = Content.find({ loc: { $near: [props.latitude, props.longitude] } }).fetch();
-
+    let items;
+    if (props.latitude === 0 && props.longitude === 0) {
+      items = Content.find().fetch();
+    } else {
+      items = Content.find({ loc: { $near: [props.latitude, props.longitude] } }).fetch();
+    }
   return {
     itemList: items || false
   };

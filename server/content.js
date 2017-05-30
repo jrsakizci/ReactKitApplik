@@ -3,13 +3,13 @@ import { Accounts } from 'meteor/accounts-base';
 import { Content } from '../both/collections';
 
 if (Meteor.isServer) {
-    Meteor.publish('getSingleItem', () => {
-        return Content.find();
+    Meteor.publish('getSingleItem', (id) => {
+        return Content.find({ _id: id });
     });
     Meteor.methods({
        addNewContent: (name, descr, categories, longi, lati, picsUrl, dateTime) => {
            try {
-                Content.insert({
+               return Content.insert({
                     content_name: name,
                     content_desc: descr,
                     content_cats: categories,

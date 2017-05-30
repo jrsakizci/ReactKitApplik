@@ -1,19 +1,54 @@
+@message-btn-bg: #fecd06;
+@message-btn-hover: #ffdd52;
+@item-container-bg: #f1f1f1;
+@cat-text-color: #06baff;
 
 #single-item {
-    background: rgb(241, 241, 241);
+    background: @item-container-bg;
     min-height: 450px;
     padding: 10px;
     border-radius: 5px;
     @media (min-width:1024px) {
     width: 70%;
     margin: 0 auto;
+    height:450px;
     position:relative;
     }
     .item-img-container {
         img {
             width: 88%;
-            height: 440px;
+            height: 350px;
             padding: 5px;
+            display:none;
+            border-radius:5px;
+            @media (min-width:1024px) {
+                display:block;
+            }
+        }
+        @media (min-width:250px) and (max-width:1024px) {
+            text-align:center;
+        }
+        .item-message-button {
+            width:88%;
+            margin:5px auto;
+            background:@message-btn-bg;
+            height:50px;
+            text-align:center;
+            cursor:pointer;
+            font: bold 20px/50px 'Ropa Sans', sans-serif;
+            border-radius:5px;
+            &:hover {
+                background:@message-btn-hover;
+            }
+            @media (min-width:240px) and (max-width:450px) {
+                margin:5px auto;
+            }
+            @media (min-width:450px) and (max-width:1024px) {
+                width:300px;
+            }
+            @media (min-width:1024px) {
+                margin: 5px;
+            }
         }
         @media (min-width:1024px) {
              float:left;
@@ -22,43 +57,57 @@
     }
     .item-content-container {
         .content-name {
-            font-size: 25px;
-            font-weight: bold;
-            color: #4c4c4c;
-            border-bottom: 1px solid #d8d8d8;
-            margin: 0px 0px 10px 0px;
+            font:bold 25px 'Ropa Sans', sans-serif;
+            color: #000;
+            border-bottom: 2px solid #fff;
+            padding: 0px 0px 6px 0px;
         }
         @media (min-width:1024px) {
             float:right;
-            width:80%;
+            width:75%;
         }
-    }
-    .item-info {
-           background: #e2e2e2;
-            min-height: 50px;
-            line-height: 50px;
-            text-indent: 10px;
-        .item-info-container {
-            .item-info-col {
-                width:100%;
-                @media (min-width:1024px) {
-                    width:25%;
-                    float:left;
+        .content-description {
+            height:258px;
+            font:normal 15px 'Montserrat', sans-serif;
+            margin:0px 0px 11px 0px;
+        }
+        .content-categories {
+            margin:15px 0px;
+            color: @cat-text-color;
+            font: italic 14px 'Ropa Sans', sans-serif;
+            i {
+                border:1px solid @cat-text-color;
+                border-radius:100%;
+                padding:7px;
+                margin: 0px 5px 0px 0px;
+            }
+            span {
+                &:last-child {
+                .cat-comma {
+                    display:none;
                 }
-                .item-message-button {
-                    width:100%;
-                    text-align:center;
-                    float:right;
-                    background: #0069ea;
-                    color: #fff;
                 }
             }
         }
-        @media (min-width:1024px) {
-             position: absolute;
-            bottom: 0px;
-            width: 80%;
-            left: 20%;
+        .item-info-container {
+            background: @item-container-bg;
+            width:100%;
+            min-height:50px;
+            border-radius:5px;
+            overflow:hidden;
+            text-indent:10px;
+            @media (min-width: 1024px) {
+                height:50px;
+                background:#fff;
+            }
+            .item-info-col {
+                float:left;
+                width:100%;
+                font:14px/50px 'Montserrat', sans-serif;
+                @media (min-width:1024px) {
+                    width:33.3%;
+                }
+            }
         }
     }
 }

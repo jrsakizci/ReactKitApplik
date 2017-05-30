@@ -6,12 +6,10 @@ import { Content } from '../../../both/collections';
 import '../../../both/publications';
 
 export default SingleItemContainer = createContainer((props) => {
-  Meteor.subscribe('getSingleItem');
-
-  const singleItem = Content.findOne({ _id: props.routeParams.id });
-
+  const subscribe = Meteor.subscribe('getSingleItem', props.routeParams.id);
   return {
     user: Meteor.user() || {},
-    getSingleItem: singleItem || false
+    getSingleItem: Content.findOne({ _id: props.routeParams.id }) || false,
+    getSingleItemIsReady: subscribe.ready()
   };
 }, ListItems);
