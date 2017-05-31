@@ -25,7 +25,7 @@ export default class ListItems extends Component {
         });
     }
     componentWillReceiveProps(nextProps) {
-       if (nextProps.getSingleItem === false && nextProps.getSingleItemIsReady) {
+       if (nextProps.getSingleItem === false && nextProps.getSingleItemIsReady || nextProps.getSingleItem.isVisible === 0) {
             this._notificationSystem.addNotification({
                 level: 'error',
                 message: 'Aradığınız içerik bulunamadı, yönlendiriliyorsunuz.'

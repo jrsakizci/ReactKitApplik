@@ -9,10 +9,14 @@ import {
 } from 'react-router';
 import Home from './Home';
 import Register from './auth/Register';
+import ForgetPassword from './auth/ForgetPassword';
 import Login from './auth/Login';
-import newItem from './NewItem';
+import VerifyEmail from './auth/VerifyEmail';
+import ResetPassword from './auth/ResetPassword';
+import NewItemContainer from './containers/NewItemContainer';
 import SingleItemConteiner from './containers/SingleItemContainer';
 import ProfileContainer from './containers/ProfileContainer';
+import ManagerIndexContainer from './manager/ManagerIndexContainer';
 import Categories from './Categories';
 import '../stylesheets/main.less';
 import NotificationSystem from 'react-notification-system';
@@ -41,9 +45,14 @@ const routes = [{
   path: '/kayit-ol',
   component: Register,
   onEnter: isUserNotLoggedIn
+},
+ {
+  path: '/sifremi-unuttum',
+  component: ForgetPassword,
+  onEnter: isUserNotLoggedIn
 }, {
   path: '/icerik-ekle',
-  component: newItem,
+  component: NewItemContainer,
   onEnter: isUserLoggedIn
 },
 {
@@ -56,7 +65,22 @@ const routes = [{
 }, {
   path: '/kategoriler',
   component: Categories
-}, {
+},
+{
+  path: 'verify-email/:id',
+  component: VerifyEmail
+},
+{
+  path: 'reset-password/:id',
+  component: ResetPassword,
+  onEnter: isUserNotLoggedIn
+},
+{
+  path: '/manager',
+  component: ManagerIndexContainer,
+  onEnter: isUserLoggedIn
+},
+{
   path: '*',
   component: Home
 }
@@ -128,7 +152,7 @@ export default class Routes extends React.Component {
                 </li>
               </ul>
             </div>
-            
+
             <div className="cf" />
           </div>
           <div className="logo-area">
@@ -139,15 +163,15 @@ export default class Routes extends React.Component {
           <div className="search-area">
             <div className="search-container">
               <div className="searchSubjectContainer" onClick={this.toggleSearchCats.bind(this)}>
-                  Hepsi <i className="fa fa-sort" />
+                Hepsi <i className="fa fa-sort" />
               </div>
               <div id="searchCategoriesList" className={this.state.showSearchMenu ? 'hide' : 'show'}>
-                <ul> 
+                <ul>
                   <li>Döküman</li>
                   <li>Kitap</li>
                 </ul>
               </div>
-                <input type="text" placeholder="Arama yap.." />
+              <input type="text" placeholder="Arama yap.." />
             </div>
           </div>
           <div className="nav-area">
@@ -196,7 +220,7 @@ export default class Routes extends React.Component {
         </div>
         <div id="content">
           <Router history={browserHistory} routes={routes}>
-            
+
           </Router>
         </div>
         <NotificationSystem ref="notificationSystem" />

@@ -3,9 +3,6 @@ import { Accounts } from 'meteor/accounts-base';
 import { Content } from '../both/collections';
 
 if (Meteor.isServer) {
-    Meteor.publish('getSingleItem', (id) => {
-        return Content.find({ _id: id });
-    });
     Meteor.methods({
        addNewContent: (name, descr, categories, longi, lati, picsUrl, dateTime) => {
            try {

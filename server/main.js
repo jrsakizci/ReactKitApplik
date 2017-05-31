@@ -16,19 +16,25 @@ Meteor.startup(() => {
 
     // 2. Format the email
     //-- Set the from address
-    Accounts.emailTemplates.from = 'test@test.com';
+    Accounts.emailTemplates.from = 'admin@kitapplik.com';
 
     //-- Application name
-    Accounts.emailTemplates.siteName = 'My_App';
+    Accounts.emailTemplates.siteName = 'KitApplik';
 
     //-- Subject line of the email.
-    Accounts.emailTemplates.verifyEmail.subject = function(user) {
-        return 'Confirm Your Email Address for My_App';
+    Accounts.emailTemplates.verifyEmail.subject = (user) => {
+        return 'Lütfen Email Adresinizi Doğrulayın.';
     };
-
+    Accounts.emailTemplates.resetPassword.subject = () => {
+        return 'Şifre Sıfırlama E-maili';
+    };
+    Accounts.emailTemplates.resetPassword.text = (user, url) => {
+        const newUrl = url.replace('/#','');
+        return 'Merhaba ' + user.username + ', \r\n Şifrenizi sıfırlamanız için aşağıdaki linke tıklayabilirsiniz: \r\n' + newUrl;
+    };
     //-- Email text
-    Accounts.emailTemplates.verifyEmail.text = function(user, url) {
-        var newUrl = url.replace('/#','');
-        return 'Thank you for registering.  Please click on the following link to verify your email address: \r\n' + newUrl;
+    Accounts.emailTemplates.verifyEmail.text = (user, url) => {
+        const newUrl = url.replace('/#','');
+        return 'Kayıt olduğunuz için teşekkürler! Aramıza hoş geldiniz. Lütfen bu linke tıklayarak email adresinizi doğrulayın: \r\n' + newUrl;
     };
 });

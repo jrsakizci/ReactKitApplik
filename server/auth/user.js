@@ -3,11 +3,13 @@ import { Accounts } from 'meteor/accounts-base';
 
 if (Meteor.isServer) {
     Accounts.onCreateUser((options, user) => {
-        Meteor.setTimeout(function () {
+        Meteor.setTimeout(() => {
             Accounts.sendVerificationEmail(user._id);
         }, 2 * 1000);
+        user.role = 'user';
         return user;
     });
+    
     Meteor.methods({
         newUser: (uname, emailn, passwordn) => {
             try {
@@ -17,6 +19,7 @@ if (Meteor.isServer) {
                         username: uname,
                         password: passwordn,
                         email: emailn,
+                        role: 'user',
                         createdAt: new Date()
                     });
                 }
@@ -40,10 +43,21 @@ if (Meteor.isServer) {
                     Accounts.removeEmail(Meteor.userId(), user.emails[0].address);
                 }
                 Accounts.addEmail(Meteor.userId(), newEmail, false);
+                Meteor.setTimeout(() => {
+                    Accounts.sendVerificationEmail(user._id);
+                }, 2 * 1000);
             }
             catch (err) {
                 throw err;
             }
         },
+        sendVerificationEmailAgain: () => {
+            try {
+                Accounts.sendVerificationEmail(Meteor.userId());
+            }
+            catch (err) {
+                throw err;
+            }
+        }
     });
 }

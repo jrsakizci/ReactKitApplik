@@ -94,7 +94,7 @@ export default class Profile extends Component {
                     });
                 } else {
                     this._notificationSystem.addNotification({
-                        message: 'Email başarıyla değiştirildi.',
+                        message: 'Email başarıyla değiştirildi. Onaylama kodu emailinize yollandı!',
                         level: 'success'
                     });
                 }
@@ -194,7 +194,41 @@ export default class Profile extends Component {
     getEmailAddress() {
         return this.props.user.profile ? <p className="info">Kayıtlı Emailiniz: <strong> {this.props.user.emails[0].address} </strong></p> : null;
     }
+    getVerifiedStatus() {
+        return this.props.user.profile ? this.props.user.emails[0].verified : null;
+    }
+    sendVerificationAgain() {
+        this.setState({
+            loader: true
+        });
+        Meteor.call('sendVerificationEmailAgain', (err) => {
+            if (err) {
+                this._notificationSystem.addNotification({
+                            message: 'E-maili gönderirken bi sorunla karşılaştık. Lütfen daha sonra tekrar deneyiniz.',
+                            level: 'error'
+                        });
+                         this.setState({
+            loader: false
+        });
+            } else {
+               this._notificationSystem.addNotification({
+                            message: 'Email başarıyla gönderilmiştir. Lütfen kontrol ediniz.',
+                            level: 'success'
+                        });
+                         this.setState({
+            loader: false
+        });
+            }
+        });
+
+    }
     render() {
+        let verifiedBtn = '';
+        if (this.getVerifiedStatus()) {
+            verifiedBtn = '';
+        } else {
+            verifiedBtn = <input type="button" className="login-sbmt" value="Tekrar Onay Kodu Gönder" onClick={() => this.sendVerificationAgain()} />;
+         }
         return (
 
             <div>
@@ -235,6 +269,9 @@ export default class Profile extends Component {
                         <div className="profile-info">
                             <div id="login">
                                 {this.getEmailAddress()}
+                                <div>
+                                </div>
+                                {verifiedBtn}
                                 <form onSubmit={this.changeEmail}>
                                     <input
                                         type="text"
@@ -251,7 +288,7 @@ export default class Profile extends Component {
                                         value="Güncelle"
                                     />
                                 </form>
-
+                              
                             </div>
                         </div>
                     </TabPanel>

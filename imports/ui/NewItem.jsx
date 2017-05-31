@@ -27,6 +27,7 @@ export default class NewItem extends Component {
     componentWillMount() {
 
     }
+  
     componentDidMount() {
         this._notificationSystem = this.refs.notificationSystem;
         this.setState({
@@ -52,6 +53,20 @@ export default class NewItem extends Component {
         });
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.user) {
+            if (!nextProps.user.emails[0].verified) {
+            this._notificationSystem.addNotification({
+                level: 'error',
+                message: 'Email adresinizi onaylamadan içerik oluşturamazsınız.. Yönlendiriliyorsunuz..'
+            });
+            setTimeout(() => {
+                    browserHistory.push('/profil');
+                }, 1500);
+            }
+        }
+    }
+
     handleInputChange(event) {
         const value = event.target.value;
         const name = event.target.name;
@@ -62,6 +77,8 @@ export default class NewItem extends Component {
     }
     submitContent(event) {
         event.preventDefault();
+        
+
         Meteor.subscribe('getSingleItem');
         this.setState({
             loader: true
