@@ -21,9 +21,21 @@ export default class GetItemsWaitingApproval extends Component {
     renderLoader() {
         return <Loader show={this.state.loader} />;
     }
+    loadMore() {
+        this.props.loadMore();
+    }
+    getItems() {
+        if (this.props.itemList.length > 0) {
+            return this.props.itemList.map((item) =>
+                <span key={item._id}>{item.content_name} <span className="cat-comma">,</span> </span>
+            )}
+    }
     render() {
         return (
-
+            <div>
+                {this.getItems()}
+            <span onClick={() => { this.loadMore(); }}>Load More</span>
+            </div>
         );
     }
 }

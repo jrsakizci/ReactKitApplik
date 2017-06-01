@@ -4,11 +4,17 @@ import GetItemsWaitingApproval from './GetItemsWaitingApproval';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Content } from '../../../both/collections';
 
+const initPage = 1;
+let nextPage = initPage;
+
 export default ItemsWaitingApprovalContainer = createContainer((props) => {
-    const itemsSub = Meteor.subscribe('contentsWaitingApproval');
-    const items = Content.find({ isVisible: 0 });
+    const limit = 2;
+    const itemsHandle = Meteor.subscribe('front.items.waitingapproval', initPage, limit);
   return {
-      itemList: items || false,
-      itemSub: itemsSub.ready()
+      itemList: Content.find({ isVisible: 0 }).fetch(),
+      itemSub: itemsHandle.ready(),
+      loadMore() {
+          const itemsHandle = Meteor.subscribe('front.items.waitingapproval', ++nextPage, limit);
+      }
   };
 }, GetItemsWaitingApproval);
