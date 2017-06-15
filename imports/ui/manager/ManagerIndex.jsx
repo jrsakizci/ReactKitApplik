@@ -18,7 +18,6 @@ export default class ManagerIndex extends Component {
         this._notificationSystem = this.refs.notificationSystem;
     }
     componentWillReceiveProps(nextProps) {
-
         if (nextProps.userReady && !nextProps.user) {
             setTimeout(() => {
                 browserHistory.push('/');
@@ -27,10 +26,6 @@ export default class ManagerIndex extends Component {
             this.setState({
                 loader: false,
                 showContent: true
-            });
-            this._notificationSystem.addNotification({
-                level: 'success',
-                message: 'Hoşgeldin..'
             });
         }
     }

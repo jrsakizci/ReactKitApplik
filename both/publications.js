@@ -16,12 +16,12 @@ if (Meteor.isServer) {
         return Content.find({ _id: id });
     });
     Meteor.publish('front.items.waitingapproval', (page, limit) => {
-    page = +page;
-    limit = +limit;
+        page = +page;
+        limit = +limit;
 
-    const skip = (page - 1) * limit;
+        const skip = (page - 1) * limit;
 
-    return Content.find({ isVisible: 0 }, { skip, limit });
-});
+        return Content.find({ isVisible: 0 }, { skip, limit });
+    });
 }
 

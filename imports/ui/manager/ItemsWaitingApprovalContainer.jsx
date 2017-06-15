@@ -8,7 +8,7 @@ const initPage = 1;
 let nextPage = initPage;
 
 export default ItemsWaitingApprovalContainer = createContainer((props) => {
-    const limit = 2;
+    const limit = 4;
     const itemsHandle = Meteor.subscribe('front.items.waitingapproval', initPage, limit);
   return {
       itemList: Content.find({ isVisible: 0 }).fetch(),

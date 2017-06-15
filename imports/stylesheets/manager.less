@@ -1,0 +1,48 @@
+.items-container {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center;
+    background: #f3f3f3;
+    border: 1px solid #3e3e3e;
+    border-radius: 5px;
+    @media (min-width: 1024px) {
+        width: 15%;
+        float: left;
+        margin: 10px 5px;
+        padding: 10px 5px;
+    }
+    .item-approve, .item-remove {
+        border-radius: 5px;
+        padding: 5px;
+        color: #fff;
+        cursor:pointer;
+    }
+    .item-approve {
+         background: #00c762;
+         margin:5px 0px;
+    }
+    .item-remove {
+        background:red;
+    }
+    .item-image {
+        img {
+            height: 150px;
+        }
+    }
+    .item-title {
+        font: bold 15px 'Montserrat', sans-serif;
+    }
+    .item-description {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+}
+
+.clearfix {
+    content: '';
+    display: table;
+    clear: both;
+}

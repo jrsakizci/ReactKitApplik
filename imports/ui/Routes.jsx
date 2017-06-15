@@ -17,7 +17,9 @@ import NewItemContainer from './containers/NewItemContainer';
 import SingleItemConteiner from './containers/SingleItemContainer';
 import ProfileContainer from './containers/ProfileContainer';
 import ManagerIndexContainer from './manager/ManagerIndexContainer';
+import Messages from './messaging/Messages';
 import Categories from './Categories';
+import SingleCategory from './SingleCategory';
 import '../stylesheets/main.less';
 import NotificationSystem from 'react-notification-system';
 /* Routes and authentication */
@@ -65,6 +67,14 @@ const routes = [{
 }, {
   path: '/kategoriler',
   component: Categories
+},
+{
+  path: '/kategori/:id',
+  component: SingleCategory
+},
+{
+  path: '/dokuman/:id',
+  component: SingleCategory
 },
 {
   path: 'verify-email/:id',
@@ -177,8 +187,7 @@ export default class Routes extends React.Component {
           <div className="nav-area">
             <div className="header-links">
               <div className="message">
-                <i className="fa fa-comment-o" />
-                <div className="messageNotificationNumber">1</div>
+               <Messages />
               </div>
             </div>
           </div>
