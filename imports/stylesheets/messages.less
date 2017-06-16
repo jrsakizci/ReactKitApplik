@@ -1,0 +1,106 @@
+    .messages-close-button {
+        position: absolute;
+        right: 20px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: #005c7d;
+        font-size: 20px;
+    }
+    
+    .messages-conversations-heading {
+        font: normal 25px/50px 'Playfair Display', sans-serif;
+        text-align: center;
+    }
+    
+    #messages-new-message {
+        border-radius: 5px;
+        border: 1px solid #06baff;
+        background: transparent;
+        color: #06baff;
+        padding: 8px;
+        cursor: pointer;
+        &:hover {
+            border-color: #1eb6ec;
+            color: #1eb6ec;
+        }
+    }
+    .newMessageActive {
+        background:#06baff !important;
+        color:#fff !important;
+    }
+    #new-message-container, #inbox-container {
+        position: absolute;
+        left: 10px;
+        right: 0px;
+        width: 80%;
+        margin: 0 auto;
+        bottom: 0px;
+        top: 150px;
+        transition: all 1s ease;
+    }
+    
+    #new-message-container {
+        .new-message-back {
+            border-radius: 5px;
+            border: 1px solid #4fa7e7;
+            background: #06baff;
+            color: #ffffff;
+            padding: 8px;
+            width: 63px;
+            font: 13px sans-serif;
+            margin: 5px 0px;
+            cursor: pointer;
+        }
+        input, textarea {
+            text-indent: 10px;
+            border-radius: 5px;
+            margin: 5px 0px;
+            width: 100%;
+            padding: 0px;
+            border: 1px solid #b5b5b5;
+        }
+        input {
+            height: 35px;
+        }
+        .message-sbmt {
+            background: #06baff;
+            width: 80px;
+            text-indent: 0px;
+            color: #fff;
+            margin: 0px;
+            border-color: #06baff;
+        }
+        div {
+            .hideSuggestion {
+                display: none;
+            }
+            .showSuggestion {
+                display: block;
+            }
+        }
+        #user-suggestions {
+            position: absolute;
+            background: #fff;
+            /* width: 100%; */
+            border: 1px solid #d0d0d0;
+            padding: 5px;
+            ul {
+                list-style: none;
+                li {
+                    border-bottom: 1px solid #d8d8d8;
+                    height: 30px;
+                    line-height: 30px;
+                    cursor:pointer;
+                    &:last-child {
+                        border: none;
+                    }
+                }
+            }
+        }
+    }
+    
+    .hide {
+        left: -3000px !important;
+        margin: 0 !important;
+    }

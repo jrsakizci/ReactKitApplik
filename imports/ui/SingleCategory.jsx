@@ -110,12 +110,18 @@ export default class SingleCategory extends Component {
         return <Loader show={this.state.loader} />;
     }
     render() {
+        let loadMoreBtn = null;
+        if (this.state.itemList.length > 0) {
+            loadMoreBtn = <div className="loadMoreBtn">Daha Fazla Yükle</div>;
+        } else {
+            loadMoreBtn = null;
+        }
         if (this.state.itemList) {
             return (
                 <div id="content" key={this.state.key}>
                     {this.repeatItems()}
                     <div className='clearfix' />
-                        <div className="loadMoreBtn">Daha Fazla Yükle</div>
+                        {loadMoreBtn}
                         <NotificationSystem ref="notificationSystem" />   
                         {this.renderLoader()}
                 </div>

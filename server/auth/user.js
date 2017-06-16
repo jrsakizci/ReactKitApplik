@@ -58,6 +58,13 @@ if (Meteor.isServer) {
             catch (err) {
                 throw err;
             }
+        },
+        getUserSuggestions: (uname) => {
+            try {
+               return Meteor.users.find({ username: { $regex: '.*' + uname + '.*' } }).fetch();
+            } catch (err) {
+                throw err;
+            }
         }
     });
 }
