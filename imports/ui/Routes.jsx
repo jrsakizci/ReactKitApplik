@@ -14,10 +14,10 @@ import Login from './auth/Login';
 import VerifyEmail from './auth/VerifyEmail';
 import ResetPassword from './auth/ResetPassword';
 import NewItemContainer from './containers/NewItemContainer';
-import SingleItemConteiner from './containers/SingleItemContainer';
+import SingleItemContainer from './containers/SingleItemContainer';
 import ProfileContainer from './containers/ProfileContainer';
 import ManagerIndexContainer from './manager/ManagerIndexContainer';
-import Messages from './messaging/Messages';
+import MessagesContainer from './containers/MessagesContainer';
 import Categories from './Categories';
 import SingleCategory from './SingleCategory';
 import '../stylesheets/main.less';
@@ -59,7 +59,7 @@ const routes = [{
 },
 {
   path: '/icerik/:id',
-  component: SingleItemConteiner
+  component: SingleItemContainer
 }, {
   path: '/profil',
   component: ProfileContainer,
@@ -187,7 +187,7 @@ export default class Routes extends React.Component {
           <div className="nav-area">
             <div className="header-links">
               <div className="message">
-               <Messages />
+               <MessagesContainer />
               </div>
             </div>
           </div>

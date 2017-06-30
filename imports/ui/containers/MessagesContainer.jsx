@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data';
-import NewMessage from '../messaging/NewMessage';
+import Messages from '../messaging/Messages';
 
-export default NewMessageContainer = createContainer((props) => {
+export default MessagesContainer = createContainer((props) => {
   return {
      user: Meteor.user() || {}
   };
-}, NewMessage);
+}, Messages);

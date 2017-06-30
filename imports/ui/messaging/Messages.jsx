@@ -6,6 +6,7 @@ import Loader from '../Loader';
 import ReactModal from 'react-modal';
 import '../../stylesheets/messages.less';
 import NewMessageContainer from '../containers/NewMessageContainer';
+import InboxContainer from '../containers/MessageInboxContainer';
 
 export default class Messages extends Component {
     constructor(props) {
@@ -51,7 +52,7 @@ export default class Messages extends Component {
                     <h2 className='messages-conversations-heading'><i className="fa fa-envelope-open-o" aria-hidden="true" /> Mesajlar</h2>
                     <button onClick={this.toggleNewMessage.bind(this)} id='messages-new-message' className={this.state.newMessage ? '' : 'newMessageActive'}><i className="fa fa-commenting-o" aria-hidden="true" /> Yeni Mesaj Gönder</button>
                     <div id='inbox-container' className={this.state.newMessage ? 'show' : 'hide'}>
-                        asdasdasasfasdasdasf
+                       <InboxContainer id="1" />
                     </div>
                     <div id='new-message-container' className={this.state.newMessage ? 'hide' : 'show'}>
                         <div className='new-message-back' onClick={this.toggleNewMessage.bind(this)}> <i className="fa fa-angle-double-left" aria-hidden="true" /> Geri Dön</div>

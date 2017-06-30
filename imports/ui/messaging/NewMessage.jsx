@@ -5,12 +5,15 @@ import NotificationSystem from 'react-notification-system';
 import Loader from '../Loader';
 import ReactModal from 'react-modal';
 import '../../stylesheets/messages.less';
+import moment from 'moment';
 
 export default class NewMessage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedUser: [],
+            selectedUser: {
+                username: '',
+            },
             username: '',
             userList: [],
             message: '',
@@ -28,7 +31,7 @@ export default class NewMessage extends Component {
     handleUsernameChange(event) {
         if (this.state.selectedUser.username) {
             this.setState({
-                selectedUser: []
+                selectedUser: {}
             });
         }
         const value = event.target.value;
@@ -63,7 +66,13 @@ export default class NewMessage extends Component {
     }
     sendMessage(event) {
         event.preventDefault();
-        console.log(this.state.selectedUser);
+        Meteor.call('sendNewMessage',
+            this.props.user._id,
+            this.state.selectedUser._id,
+            moment().format(),
+            this.state.message, (response, error) => {
+                console.log(response);
+        });
     }
     renderUserList() {
         return this.messageInfos.userList.map((item) =>
