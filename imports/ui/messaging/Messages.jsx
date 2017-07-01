@@ -52,7 +52,7 @@ export default class Messages extends Component {
                     <h2 className='messages-conversations-heading'><i className="fa fa-envelope-open-o" aria-hidden="true" /> Mesajlar</h2>
                     <button onClick={this.toggleNewMessage.bind(this)} id='messages-new-message' className={this.state.newMessage ? '' : 'newMessageActive'}><i className="fa fa-commenting-o" aria-hidden="true" /> Yeni Mesaj Gönder</button>
                     <div id='inbox-container' className={this.state.newMessage ? 'show' : 'hide'}>
-                       <InboxContainer id="1" />
+                       <InboxContainer id={this.props.user._id} />
                     </div>
                     <div id='new-message-container' className={this.state.newMessage ? 'hide' : 'show'}>
                         <div className='new-message-back' onClick={this.toggleNewMessage.bind(this)}> <i className="fa fa-angle-double-left" aria-hidden="true" /> Geri Dön</div>
