@@ -18,6 +18,9 @@ if (Meteor.isServer) {
     Meteor.publish('getUserConversations', (id) => {
         return Messages.find({ members: id });
     });
+    Meteor.publish('getSingleConversation', (id) => {
+        return Messages.find({ _id: id });
+    });
     Meteor.publish('front.items.waitingapproval', (page, limit) => {
         page = +page;
         limit = +limit;

@@ -14,7 +14,7 @@ export default class GetMessageUserInfo extends Component {
         return (
             <div className="item-info-container">
                 <div className="item-info-col"> 
-                    <i className="fa fa-user" /> {this.props.userInf.username}
+                    Gönderen: {this.props.userInf.username}
                 </div>
             </div>
         );

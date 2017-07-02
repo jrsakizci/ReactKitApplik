@@ -7,12 +7,12 @@
         color: #005c7d;
         font-size: 20px;
     }
-    
+
     .messages-conversations-heading {
         font: normal 25px/50px 'Playfair Display', sans-serif;
         text-align: center;
     }
-    
+
     #messages-new-message {
         border-radius: 5px;
         border: 1px solid #06baff;
@@ -25,11 +25,14 @@
             color: #1eb6ec;
         }
     }
+
     .newMessageActive {
-        background:#06baff !important;
-        color:#fff !important;
+        background: #06baff !important;
+        color: #fff !important;
     }
-    #new-message-container, #inbox-container {
+
+    #new-message-container,
+    #inbox-container {
         position: absolute;
         left: 10px;
         right: 0px;
@@ -39,7 +42,7 @@
         top: 150px;
         transition: all 1s ease;
     }
-    
+
     #new-message-container {
         .new-message-back {
             border-radius: 5px;
@@ -47,12 +50,13 @@
             background: #06baff;
             color: #ffffff;
             padding: 8px;
-            width: 63px;
+            width: 100px;
             font: 13px sans-serif;
             margin: 5px 0px;
             cursor: pointer;
         }
-        input, textarea {
+        input,
+        textarea {
             text-indent: 10px;
             border-radius: 5px;
             margin: 5px 0px;
@@ -91,7 +95,7 @@
                     border-bottom: 1px solid #d8d8d8;
                     height: 30px;
                     line-height: 30px;
-                    cursor:pointer;
+                    cursor: pointer;
                     &:last-child {
                         border: none;
                     }
@@ -99,8 +103,23 @@
             }
         }
     }
-    
+
     .hide {
         left: -3000px !important;
         margin: 0 !important;
+    }
+
+    .message-container {
+        border: 1px solid #a0a0a0;
+        padding: 10px 10px;
+        background: #f3f3f3;
+        border-radius: 5px;
+        margin: 15px 0px;
+        height: 65px;
+        overflow: hidden;
+        font-family: 'Montserrat', sans-serif;
+        .message-date {
+            font: 10px/15px 'Montserrat', sans-serif;
+            color: #666;
+        }
     }

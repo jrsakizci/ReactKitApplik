@@ -55,7 +55,7 @@ export default class Messages extends Component {
                        <InboxContainer id={this.props.user._id} />
                     </div>
                     <div id='new-message-container' className={this.state.newMessage ? 'hide' : 'show'}>
-                        <div className='new-message-back' onClick={this.toggleNewMessage.bind(this)}> <i className="fa fa-angle-double-left" aria-hidden="true" /> Geri Dön</div>
+                        <div className='new-message-back' onClick={this.toggleNewMessage.bind(this)}> <i className="fa fa-angle-double-left" aria-hidden="true" /> Gelen Mesajlar</div>
                         <NewMessageContainer />
                     </div>
                 </ReactModal>
