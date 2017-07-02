@@ -26,6 +26,9 @@ export default class Inbox extends Component {
             singleId: id
         });
     }
+    toggleSingleMessage() {
+         this.setState({ showSingle: !this.state.showSingle });
+    }
     renderConversations() {
         if (this.props.getConversations.length > 0) {
             return this.props.getConversations.map((item) =>
@@ -39,10 +42,11 @@ export default class Inbox extends Component {
     render() {
         return (
             <div>
-                <div className={this.state.showSingle ? 'hide' : 'show'}>
+                <div className={this.state.showSingle ? 'hideSingle' : 'showSingle'}>
                     {this.renderConversations()}
                 </div>
-                <div className={this.state.showSingle ? 'show' : 'hide'}>
+                <div className={this.state.showSingle ? 'showSingle' : 'hideSingle'}>
+                    <div className='new-message-back' onClick={this.toggleSingleMessage.bind(this)}> <i className="fa fa-angle-double-left" aria-hidden="true" /> Gelen Mesajlar</div>
                     <GetSingleMessageContainer id={this.state.singleId} />
                 </div>
             </div>
