@@ -4,8 +4,8 @@ import './slingshot';
 
 Meteor.startup(() => {
   // code to run on server at startup
-    var username = 'bgrbey@gmail.com';
-    var password = 'Bugra.98036??';
+    var username = '';
+    var password = '';
     var server = 'smtp.gmail.com';
     var port = '465';
 
